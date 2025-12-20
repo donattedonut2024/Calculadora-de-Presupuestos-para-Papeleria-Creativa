@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donatte App - Doble Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <style>
+        /* --- ESTILOS DONATTE --- */
+        :root {
+            --rosa-brand: #ff5983;
+            --rosa-claro: #ffebee;
+            --menta-brand: #26c6da;
+            --verde-venta: #2e7d32;
+            --rojo-costo: #c2185b;
+            --celeste-pastel: #b2ebf2; 
+            --lila-pastel: #d1c4e9;
+            --durazno-pastel: #ffccbc; /* Nuevo para botón interno */
+            --fondo: #fff5f8;
+            --cafe-texto: #4e342e;
+            --blanco: #ffffff;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--fondo);
+            color: var(--cafe-texto); 
+            margin: 0; padding: 20px; 
+            font-size: 13px;
+        }
+        
+        h1 { text-align: center; color: var(--rosa-brand); margin-bottom: 20px; font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 1px;}
+        h3 { color: var(--menta-brand); font-size: 14px; font-weight: 600; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px dashed #ffe0e9; padding-bottom: 5px;}
+        h4 { color: var(--rosa-brand); margin-top: 0; text-align: center; font-size: 15px;}
+        
+        .container { display: flex; flex-wrap: wrap; gap: 15px; max-width: 900px; margin: 0 auto; }
+        
+        .card { 
+            background: var(--blanco); padding: 20px; border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(255, 89, 131, 0.08); border: 1px solid #fff0f5;
+        }
+        
+        .left-panel { flex: 2; min-width: 320px; } 
+        .right-panel { flex: 1; min-width: 240px; background-color: #f0fbfc; border: 1px dashed var(--menta-brand); height: fit-content; } 
+        .bottom-panel { width: 100%; margin-top: 10px; }
+
+        label { display: block; margin-top: 10px; font-weight: 600; color: #8d6e63; font-size: 11px;}
+        input { 
+            width: 100%; padding: 8px 12px; margin-top: 3px; border: 2px solid #fce4ec; 
+            border-radius: 12px; box-sizing: border-box; font-size: 13px; font-family: inherit; color: var(--cafe-texto);
+            transition: all 0.2s; background: #fffdfd;
+        }
+        input:focus { outline: none; border-color: var(--rosa-brand); background-color: #fff; }
+        
+        .row { display: flex; gap: 8px; align-items: center; margin-bottom: 5px; }
+        
+        button { cursor: pointer; transition: 0.2s; font-family: inherit; border: none; font-weight: 600;}
+        
+        .btn-main { 
+            width: 100%; padding: 12px; border-radius: 50px; font-size: 14px; color: white; margin-top: 15px;
+            background: linear-gradient(45deg, var(--rosa-brand), #ff8fa9); 
+            box-shadow: 0 4px 15px rgba(255, 89, 131, 0.3);
+        }
+        .btn-main:hover { transform: translateY(-2px); }
+
+        .btn-small { padding: 5px 10px; border-radius: 8px; font-size: 11px; }
+        .btn-add { background-color: #e0f7fa; color: var(--menta-brand); margin-top: 8px; width: 100%;}
+        .btn-remove { background-color: #ffebee; color: #ff5252; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
+        
+        .btn-aux { width: 100%; padding: 8px; background-color: var(--menta-brand); color: white; border-radius: 10px; margin-top: 10px; font-size: 12px;}
+        
+        /* --- BOTONES DE ACCIÓN (3 Botones ahora) --- */
+        .action-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; flex-wrap: wrap;}
+        
+        .btn-final {
+            padding: 8px 12px; border-radius: 12px; font-weight: 600; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; gap: 4px; color: var(--cafe-texto); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex: 1; min-width: 80px;
+        }
+        .btn-save { background-color: var(--celeste-pastel); }
+        .btn-client { background-color: var(--lila-pastel); }
+        .btn-internal { background-color: var(--durazno-pastel); }
+
+        /* --- RESULTADO (Lista Detallada) --- */
+        .result-area { 
+            background-color: var(--rosa-claro);
+            padding: 20px 25px; 
+            border-radius: 15px; 
+            margin-top: 25px; 
+            border: 1px solid #ffcdd2;
+            max-width: 400px; 
+            margin-left: auto; margin-right: auto;
+        }
+
+        .res-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--cafe-texto); }
+        .res-divider { height: 1px; border-top: 2px dashed #ccc; margin: 15px 0; opacity: 0.5; }
+        
+        .res-list-container {
+            background: rgba(255,255,255,0.5); padding: 8px; border-radius: 8px; margin-bottom: 10px;
+        }
+        .res-list-item {
+            font-size: 12px; color: #666; display: flex; justify-content: space-between; margin-bottom: 4px; font-style: italic;
+        }
+
+        .res-costo-total { color: var(--rojo-costo); font-weight: 700; margin-top: 10px; font-size: 14px;}
+        .res-final { text-align: center; font-size: 20px; font-weight: 700; color: var(--verde-venta); display: flex; align-items: center; justify-content: center; gap: 5px;}
+        
+        /* Tabla Historial */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: #aaa; font-size: 10px; padding: 8px; font-weight: 600;}
+        td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; font-size: 12px; color: var(--cafe-texto);}
+        
+        /* Modal Detalle */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.8); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(2px);
+        }
+        .modal-box {
+            background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffe0e9; position: relative;
+        }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #ccc; }
+
+        /* --- TICKETS OCULTOS (Para generar las imágenes) --- */
+        .ticket-base {
+            position: absolute; left: -9999px; top: 0; 
+            width: 400px; background: white; box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; color: var(--cafe-texto);
+        }
+
+        /* Ticket Cliente: Simple y Bonito */
+        #ticketCliente {
+            padding: 40px 30px;
+            border-top: 20px solid var(--rosa-brand);
+            border-bottom: 20px solid var(--menta-brand);
+            text-align: center;
+        }
+        
+        /* Ticket Interno: Detallado */
+        #ticketInterno {
+            padding: 30px;
+            border: 2px dashed #ccc;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>🍩 Calculadora Donatte</h1>
+
+<div class="container">
+    
+    <div class="card left-panel">
+        <h3 style="margin-top:0; border:none; color:var(--rosa-brand);">1. Datos del Pedido</h3>
+        <label>💖 Nombre del Proyecto:</label>
+        <input type="text" id="inpNombre" placeholder="Ej: Topper Torta">
+
+        <label>💰 Precio de tu hora ($):</label>
+        <input type="number" id="inpHora" placeholder="Ej: 5000" value="5000">
+
+        <h3>2. Materiales</h3>
+        <div id="listaMateriales">
+            <div class="row mat-item">
+                <input type="text" class="m-nom" placeholder="Ej: Papel Fotográfico">
+                <input type="number" class="m-val" placeholder="$ Costo">
+            </div>
+        </div>
+        <button class="btn-small btn-add" onclick="nuevoMaterial()">+ Agregar otro material</button>
+
+        <h3>3. Tiempo y Diseño</h3>
+        <div class="row">
+            <div class="col-50">
+                <label>⏱️ Minutos trabajados:</label>
+                <input type="number" id="inpMinutos" placeholder="Ej: 30">
+            </div>
+            <div class="col-50">
+                <label>🎨 Costo Diseño ($):</label>
+                <input type="number" id="inpDiseno" placeholder="Ej: 1000">
+            </div>
+        </div>
+
+        <h3>4. Rentabilidad</h3>
+        <label>📈 Porcentaje Ganancia (%):</label>
+        <input type="number" id="inpGanancia" value="35">
+
+        <button class="btn-main" onclick="calcular()">CALCULAR PRECIO FINAL</button>
+
+        <div id="boxResultado" class="result-area" style="display:none;">
+            
+            <strong style="font-size:11px; color:var(--rosa-brand); display:block; margin-bottom:5px;">LISTA DE MATERIALES:</strong>
+            <div id="displayListaMateriales" class="res-list-container">
+                </div>
+
+            <div class="res-row"><span>Total Materiales:</span> <span id="txtMatTotal" style="font-weight:600;">$0</span></div>
+            <div class="res-row"><span>Mano de Obra:</span> <span id="txtMano">$0</span></div>
+            <div class="res-row"><span>Diseño:</span> <span id="txtDiseno">$0</span></div>
+            
+            <div class="res-row res-costo-total"><span>COSTO TOTAL:</span> <span id="txtCosto">$0</span></div>
+            <div class="res-row"><span>Ganancia:</span> <span id="txtGanancia">$0</span></div>
+
+            <div class="res-divider"></div>
+
+            <div class="res-final">
+                <span style="font-size:12px; color:#555; font-weight:500;">PRECIO VENTA:</span> 
+                <span id="txtTotal">$0</span>
+            </div>
+            
+            <div class="action-row">
+                <button class="btn-final btn-save" id="btnGuardar" onclick="guardar()">💾 Guardar</button>
+                <button class="btn-final btn-client" onclick="descargarCliente()">📄 Cliente</button>
+                <button class="btn-final btn-internal" onclick="descargarInterno()">📋 Para Mí</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card right-panel">
+        <h4>🍬 Calc. Rápida</h4>
+        <p style="font-size:10px; text-align:center; color:#888;">Unitarios sin salir.</p>
+        <label>Precio Paquete ($):</label>
+        <input type="number" id="auxPrecio" placeholder="Ej: 12000">
+        <label>Cantidad que trae:</label>
+        <input type="number" id="auxCant" placeholder="Ej: 500">
+        <button class="btn-aux" onclick="calcUnitario()">1. Sacar Unitario</button>
+        <div id="resUnitario" style="text-align:center; margin-top:8px; font-weight:700; color: var(--menta-brand); display:none; font-size: 14px;"></div>
+        <hr style="border: 0; border-top: 1px dashed #b2dfdb; margin: 15px 0;">
+        <label>¿Cuántas usaste?</label>
+        <input type="number" id="auxUsadas" placeholder="Ej: 8">
+        <button class="btn-aux" style="background:#4db6ac;" onclick="calcTotalMat()">2. Calcular Total</button>
+        <div id="resTotalMat" style="text-align:center; margin-top:8px; font-weight:700; color: var(--rosa-brand); font-size:16px; display:none;"></div>
+    </div>
+
+    <div class="card bottom-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; color: #8d6e63; border:none;">📂 Historial</h3>
+            <button class="btn-small" style="background:#f1f1f1; color:#999;" onclick="borrarTodo()">Limpiar</button>
+        </div>
+        <table id="tablaHistorial">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Proyecto</th>
+                    <th>Total</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody id="bodyHistorial"></tbody>
+        </table>
+        <button onclick="reiniciarFabrica()" style="background:none; border:none; color:#ddd; font-size:10px; width:100%; margin-top:20px;">Reiniciar App</button>
+    </div>
+
+</div>
+
+<div id="modalDetalle" class="modal-overlay">
+    <div class="modal-box">
+        <span class="close-btn" onclick="cerrarModal()">&times;</span>
+        <h3 id="mTitulo" style="color:var(--rosa-brand); margin-top:0;">Detalle</h3>
+        <div style="background:#f9f9f9; padding:10px; border-radius:10px; margin-bottom:10px;">
+            <strong style="font-size:11px;">Materiales:</strong>
+            <ul id="mMateriales" style="padding-left:15px; margin:5px 0; font-size:12px; color:#555;"></ul>
+        </div>
+        <div style="font-size:13px;">
+            <p>Mano de Obra: <strong id="mMano"></strong></p>
+            <p>Diseño: <strong id="mDiseno"></strong></p>
+            <p>Ganancia: <strong id="mGanancia"></strong></p>
+        </div>
+        <hr style="border:0; border-top:1px dashed #ccc;">
+        <h2 id="mTotal" style="text-align:center; color:var(--verde-venta); font-size:22px;"></h2>
+    </div>
+</div>
+
+<div id="ticketCliente" class="ticket-base">
+    <div style="margin-bottom:30px;">
+        <p style="font-size:28px; font-weight:bold; color:#ff5983; margin:0; text-transform:uppercase; letter-spacing: 2px;">Donatte Donut</p>
+        <p style="font-size:14px; color:#aaa; letter-spacing: 1px;">PRESUPUESTO</p>
+    </div>
+    
+    <div style="background:#fff5f8; padding:20px; border-radius:15px; margin-bottom:30px;">
+        <span style="font-size:12px; color:#888; text-transform:uppercase;">Proyecto</span><br>
+        <span id="tc_nombre" style="font-size:22px; font-weight:600; color:#4e342e;">---</span>
+    </div>
+
+    <div style="border: 2px dashed #ffe0e9; padding:20px; border-radius:15px;">
+        <p style="font-size:14px; color:#888; margin:0;">Total a Pagar</p>
+        <p id="tc_total" style="font-size:40px; font-weight:800; color:#2e7d32; margin:5px 0;">$0</p>
+    </div>
+    
+    <div style="margin-top:40px; color:#ccc; font-size:12px;">
+        ¡Gracias por tu confianza! 🍩
+    </div>
+</div>
+
+<div id="ticketInterno" class="ticket-base">
+    <h2 style="text-align:center; color:#555; margin-bottom:5px;">FICHA INTERNA</h2>
+    <p style="text-align:center; font-size:12px; color:#999; margin-bottom:20px;">Control de Costos - Donatte</p>
+
+    <div style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+        <strong>Proyecto:</strong> <span id="ti_nombre"></span><br>
+        <span style="font-size:11px; color:#999;" id="ti_fecha"></span>
+    </div>
+
+    <strong style="font-size:12px;">Desglose Materiales:</strong>
+    <ul id="ti_listaMats" style="font-size:12px; margin-top:5px; padding-left:20px; color:#666;"></ul>
+
+    <div style="background:#f5f5f5; padding:10px; border-radius:5px; margin-top:10px; font-size:13px;">
+        <div style="display:flex; justify-content:space-between;"><span>Mat. Totales:</span> <span id="ti_matTotal"></span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Mano Obra:</span> <span id="ti_mano"></span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Diseño:</span> <span id="ti_diseno"></span></div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:bold; color:#c2185b;">
+        <span>COSTO REAL:</span> <span id="ti_costo"></span>
+    </div>
+    <div style="display:flex; justify-content:space-between; color:#2e7d32;">
+        <span>GANANCIA:</span> <span id="ti_ganancia"></span>
+    </div>
+
+    <div style="border-top:2px dashed #333; margin-top:15px; padding-top:10px; text-align:center;">
+        <span style="font-size:14px;">PRECIO VENTA:</span><br>
+        <span id="ti_total" style="font-size:24px; font-weight:bold;"></span>
+    </div>
+</div>
+
+<script>
+    // --- LÓGICA V12 ---
+    let ultimoTotal = 0;
+    let datosTicket = {};
+
+    function getNum(id) {
+        let val = document.getElementById(id).value;
+        return (val === "" || val === null) ? 0 : parseFloat(val);
+    }
+
+    function formatMoney(amount) {
+        let num = parseFloat(amount);
+        return (num % 1 === 0) ? "$" + num.toFixed(0) : "$" + num.toFixed(2);
+    }
+
+    function nuevoMaterial() {
+        let div = document.createElement("div");
+        div.className = "row mat-item";
+        div.innerHTML = `
+            <input type="text" class="m-nom" placeholder="Material">
+            <input type="number" class="m-val" placeholder="$">
+            <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
+        `;
+        document.getElementById("listaMateriales").appendChild(div);
+    }
+
+    function calcular() {
+        try {
+            let totalMat = 0;
+            let listaHTML = ""; 
+            let listaArray = [];
+
+            document.querySelectorAll(".mat-item").forEach(row => {
+                let nombre = row.querySelector(".m-nom").value || "Material";
+                let valor = parseFloat(row.querySelector(".m-val").value) || 0;
+                if(valor > 0) {
+                    totalMat += valor;
+                    listaHTML += `<div class="res-list-item"><span>${nombre}</span> <span>${formatMoney(valor)}</span></div>`;
+                    listaArray.push({n: nombre, v: valor});
+                }
+            });
+
+            if(listaHTML === "") listaHTML = "<span style='font-size:11px; color:#999;'>Sin materiales detallados</span>";
+
+            let valorHora = getNum("inpHora");
+            let minutos = getNum("inpMinutos");
+            let costoMano = (valorHora / 60) * minutos;
+            let diseno = getNum("inpDiseno");
+            let gananciaPorc = getNum("inpGanancia");
+
+            let costoPuro = totalMat + costoMano + diseno;
+            let gananciaDinero = costoPuro * (gananciaPorc / 100);
+            let precioFinal = costoPuro + gananciaDinero;
+
+            ultimoTotal = precioFinal;
+
+            // Mostrar en pantalla
+            document.getElementById("displayListaMateriales").innerHTML = listaHTML;
+            document.getElementById("txtMatTotal").innerText = formatMoney(totalMat);
+            document.getElementById("txtMano").innerText = formatMoney(costoMano);
+            document.getElementById("txtDiseno").innerText = formatMoney(diseno);
+            document.getElementById("txtCosto").innerText = formatMoney(costoPuro);
+            document.getElementById("txtGanancia").innerText = formatMoney(gananciaDinero);
+            document.getElementById("txtTotal").innerText = formatMoney(precioFinal);
+            document.getElementById("boxResultado").style.display = "block";
+            
+            // Guardar datos globales para tickets
+            datosTicket = {
+                nombre: document.getElementById("inpNombre").value || "Sin Nombre",
+                fecha: new Date().toLocaleDateString(),
+                matsList: listaArray,
+                matTotal: totalMat,
+                mano: costoMano,
+                diseno: diseno,
+                costoPuro: costoPuro,
+                ganancia: gananciaDinero,
+                total: precioFinal
+            };
+
+        } catch (error) { alert("Error: " + error.message); }
+    }
+
+    // --- GENERAR IMAGEN (Genérica) ---
+    function generarImagen(elementId, nombreArchivo) {
+        const ticket = document.getElementById(elementId);
+        ticket.style.position = "fixed"; ticket.style.left = "0"; ticket.style.zIndex = "9999"; // Hacer visible momentáneamente
+
+        html2canvas(ticket).then(canvas => {
+            let link = document.createElement('a');
+            link.download = nombreArchivo;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            ticket.style.position = "absolute"; ticket.style.left = "-9999px"; // Ocultar de nuevo
+        });
+    }
+
+    // 1. DESCARGAR CLIENTE (Solo info pública)
+    function descargarCliente() {
+        if(!datosTicket.total) return alert("Primero calcula el precio");
+        document.getElementById("tc_nombre").innerText = datosTicket.nombre;
+        document.getElementById("tc_total").innerText = formatMoney(datosTicket.total);
+        generarImagen("ticketCliente", "Presupuesto-Cliente.png");
+    }
+
+    // 2. DESCARGAR INTERNO (Todo el detalle)
+    function descargarInterno() {
+        if(!datosTicket.total) return alert("Primero calcula el precio");
+        document.getElementById("ti_nombre").innerText = datosTicket.nombre;
+        document.getElementById("ti_fecha").innerText = datosTicket.fecha;
+        
+        let ul = document.getElementById("ti_listaMats");
+        ul.innerHTML = "";
+        datosTicket.matsList.forEach(m => {
+            ul.innerHTML += `<li>${m.n}: ${formatMoney(m.v)}</li>`;
+        });
+
+        document.getElementById("ti_matTotal").innerText = formatMoney(datosTicket.matTotal);
+        document.getElementById("ti_mano").innerText = formatMoney(datosTicket.mano);
+        document.getElementById("ti_diseno").innerText = formatMoney(datosTicket.diseno);
+        document.getElementById("ti_costo").innerText = formatMoney(datosTicket.costoPuro);
+        document.getElementById("ti_ganancia").innerText = formatMoney(datosTicket.ganancia);
+        document.getElementById("ti_total").innerText = formatMoney(datosTicket.total);
+
+        generarImagen("ticketInterno", "Ficha-Interna-Donatte.png");
+    }
+
+    // --- AUXILIARES Y HISTORIAL ---
+    function guardar() {
+        let nuevoItem = { id: Date.now(), ...datosTicket };
+        let historial = JSON.parse(localStorage.getItem("appDonatte_v12") || "[]");
+        historial.unshift(nuevoItem);
+        localStorage.setItem("appDonatte_v12", JSON.stringify(historial));
+
+        let btn = document.getElementById("btnGuardar");
+        let texto = btn.innerText;
+        btn.innerText = "¡Listo!";
+        setTimeout(() => { btn.innerText = texto; }, 2000);
+        cargarTabla();
+    }
+
+    function cargarTabla() {
+        let tbody = document.getElementById("bodyHistorial");
+        tbody.innerHTML = "";
+        let historial = JSON.parse(localStorage.getItem("appDonatte_v12") || "[]");
+        
+        historial.forEach((item, index) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${item.fecha}</td>
+                <td>${item.nombre}</td>
+                <td style="font-weight:700; color:var(--verde-venta);">${formatMoney(item.total)}</td>
+                <td><button class="btn-small" style="background:#ede7f6; color:var(--menta-brand);" onclick="verDetalle(${index})">👁️</button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function verDetalle(index) {
+        let item = JSON.parse(localStorage.getItem("appDonatte_v12"))[index];
+        // Reutilizamos la lógica del modal...
+        document.getElementById("mTitulo").innerText = item.nombre;
+        let ul = document.getElementById("mMateriales"); ul.innerHTML = "";
+        if(item.matsList) item.matsList.forEach(m => ul.innerHTML += `<li>${m.n}: ${formatMoney(m.v)}</li>`);
+        document.getElementById("mMano").innerText = formatMoney(item.mano);
+        document.getElementById("mDiseno").innerText = formatMoney(item.diseno);
+        document.getElementById("mGanancia").innerText = formatMoney(item.ganancia);
+        document.getElementById("mTotal").innerText = formatMoney(item.total);
+        document.getElementById("modalDetalle").style.display = "flex";
+    }
+
+    function cerrarModal() { document.getElementById("modalDetalle").style.display = "none"; }
+    function calcUnitario() {
+        let p = getNum("auxPrecio"), c = getNum("auxCant"); if(c===0)c=1;
+        document.getElementById("resUnitario").innerText = formatMoney(p/c) + " c/u";
+        document.getElementById("resUnitario").style.display = "block";
+    }
+    function calcTotalMat() {
+        let p=getNum("auxPrecio"), c=getNum("auxCant"), u=getNum("auxUsadas"); if(c===0)c=1;
+        document.getElementById("resTotalMat").innerText = "Total: " + formatMoney((p/c)*u);
+        document.getElementById("resTotalMat").style.display = "block";
+    }
+    function borrarTodo() { if(confirm("¿Borrar?")) { localStorage.removeItem("appDonatte_v12"); cargarTabla(); }}
+    function reiniciarFabrica() { if(confirm("¿Reset?")) { localStorage.clear(); location.reload(); }}
+    
+    cargarTabla();
+</script>
+
+</body>
+</html>
