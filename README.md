@@ -52,4 +52,4 @@ No necesitas descargar nada del App Store.
 4.  ¡Listo! Aparecerá como una app nativa con el icono de Donatte.
 
 ---
-Hecho con 💖 para **Donatte Donut**.
+Hecho con 💖 por **Donatte Donut**.
