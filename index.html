@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donatte App - Mobile Fix</title>
+    <title>Calculadora Donatte</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <style>
-        /* --- ESTILOS DONATTE --- */
+        /* --- ESTILOS DE MARCA DONATTE --- */
         :root {
             --rosa-brand: #ff5983;
             --rosa-claro: #ffebee;
@@ -35,29 +35,29 @@
         h3 { color: var(--menta-brand); font-size: 14px; font-weight: 600; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px dashed #ffe0e9; padding-bottom: 5px;}
         h4 { color: var(--rosa-brand); margin-top: 0; text-align: center; font-size: 15px;}
         
-        /* Contenedor flexible */
-        .container { display: flex; flex-wrap: wrap; gap: 15px; max-width: 900px; margin: 0 auto; justify-content: center; }
+        .container { display: flex; flex-wrap: wrap; gap: 15px; max-width: 950px; margin: 0 auto; justify-content: center; }
         
         .card { 
             background: var(--blanco); padding: 20px; border-radius: 20px; 
             box-shadow: 0 10px 25px rgba(255, 89, 131, 0.08); border: 1px solid #fff0f5;
         }
         
-        /* Estilos base (Escritorio) */
-        .left-panel { flex: 2; min-width: 300px; } 
+        .left-panel { flex: 2; min-width: 320px; } 
         .right-panel { flex: 1; min-width: 240px; background-color: #f0fbfc; border: 1px dashed var(--menta-brand); height: fit-content; } 
         .bottom-panel { width: 100%; margin-top: 10px; }
 
         label { display: block; margin-top: 10px; font-weight: 600; color: #8d6e63; font-size: 11px;}
-        input { 
+        
+        input, select { 
             width: 100%; padding: 8px 12px; margin-top: 3px; border: 2px solid #fce4ec; 
             border-radius: 12px; box-sizing: border-box; font-size: 13px; font-family: inherit; color: var(--cafe-texto);
             transition: all 0.2s; background: #fffdfd;
         }
-        input:focus { outline: none; border-color: var(--rosa-brand); background-color: #fff; }
+        input:focus, select:focus { outline: none; border-color: var(--rosa-brand); background-color: #fff; }
         
         .row { display: flex; gap: 8px; align-items: center; margin-bottom: 5px; }
-        
+        .col-50 { width: 50%; }
+
         button { cursor: pointer; transition: 0.2s; font-family: inherit; border: none; font-weight: 600;}
         
         .btn-main { 
@@ -68,95 +68,68 @@
         .btn-main:hover { transform: translateY(-2px); }
 
         .btn-small { padding: 5px 10px; border-radius: 8px; font-size: 11px; }
-        .btn-add { background-color: #e0f7fa; color: var(--menta-brand); margin-top: 8px; width: 100%;}
-        .btn-remove { background-color: #ffebee; color: #ff5252; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
-        
+        .btn-add { background-color: #e0f7fa; color: var(--menta-brand); flex: 1;}
+        .btn-new-mat { background-color: var(--lila-pastel); color: #5e35b1; width: auto; padding: 0 15px; font-size: 18px;}
+        .btn-remove { background-color: #ffebee; color: #ff5252; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
         .btn-aux { width: 100%; padding: 8px; background-color: var(--menta-brand); color: white; border-radius: 10px; margin-top: 10px; font-size: 12px;}
         
         .action-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; flex-wrap: wrap;}
-        
         .btn-final {
             padding: 8px 12px; border-radius: 12px; font-weight: 600; font-size: 11px;
             display: flex; align-items: center; justify-content: center; gap: 4px; color: var(--cafe-texto); 
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex: 1; min-width: 80px;
         }
+        .btn-whatsapp { background-color: #dcf8c6; color: #2e7d32; border: 1px solid #c8e6c9;}
         .btn-save { background-color: var(--celeste-pastel); }
         .btn-client { background-color: var(--lila-pastel); }
         .btn-internal { background-color: var(--durazno-pastel); }
 
-        /* --- RESULTADO --- */
+        #listaMaterialesVisual { margin-top: 10px; background: #fff; border-radius: 10px; padding: 5px; border: 1px solid #eee; }
+        .mat-agregado-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; border-bottom: 1px dashed #eee; font-size: 12px; }
+        .mat-agregado-row:last-child { border-bottom: none; }
+
         .result-area { 
-            background-color: var(--rosa-claro);
-            padding: 20px 25px; 
-            border-radius: 15px; 
-            margin-top: 25px; 
-            border: 1px solid #ffcdd2;
-            max-width: 400px; 
-            margin-left: auto; margin-right: auto;
+            background-color: var(--rosa-claro); padding: 20px 25px; border-radius: 15px; 
+            margin-top: 25px; border: 1px solid #ffcdd2; max-width: 400px; margin-left: auto; margin-right: auto;
         }
+        /* Lista pequeña dentro del resultado */
+        .res-list-container { background: rgba(255,255,255,0.6); padding: 8px; border-radius: 8px; margin-bottom: 10px; border:1px solid #fff; }
+        .res-list-item { font-size: 11px; color: #666; display: flex; justify-content: space-between; margin-bottom: 3px; font-style: italic; }
 
         .res-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--cafe-texto); }
         .res-divider { height: 1px; border-top: 2px dashed #ccc; margin: 15px 0; opacity: 0.5; }
-        
-        .res-list-container {
-            background: rgba(255,255,255,0.5); padding: 8px; border-radius: 8px; margin-bottom: 10px;
-        }
-        .res-list-item {
-            font-size: 12px; color: #666; display: flex; justify-content: space-between; margin-bottom: 4px; font-style: italic;
-        }
-
         .res-costo-total { color: var(--rojo-costo); font-weight: 700; margin-top: 10px; font-size: 14px;}
         .res-final { text-align: center; font-size: 20px; font-weight: 700; color: var(--verde-venta); display: flex; align-items: center; justify-content: center; gap: 5px;}
         
+        .mini-form { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-top: 5px; border: 1px solid #ddd; display: none; }
+
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th { text-align: left; color: #aaa; font-size: 10px; padding: 8px; font-weight: 600;}
         td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; font-size: 12px; color: var(--cafe-texto);}
         
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.8); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(2px);
-        }
-        .modal-box {
-            background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffe0e9; position: relative;
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffe0e9; position: relative; }
         .close-btn { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #ccc; }
 
-        .ticket-base {
-            position: absolute; left: -9999px; top: 0; 
-            width: 400px; background: white; box-sizing: border-box;
-            font-family: 'Poppins', sans-serif; color: var(--cafe-texto);
-        }
+        .ticket-base { position: absolute; left: -9999px; top: 0; width: 400px; background: white; box-sizing: border-box; font-family: 'Poppins', sans-serif; color: var(--cafe-texto); }
+        #ticketCliente { padding: 40px 30px; border-top: 20px solid var(--rosa-brand); border-bottom: 20px solid var(--menta-brand); text-align: center; }
+        #ticketInterno { padding: 30px; border: 2px dashed #ccc; }
 
-        #ticketCliente {
-            padding: 40px 30px; border-top: 20px solid var(--rosa-brand); border-bottom: 20px solid var(--menta-brand); text-align: center;
-        }
-        #ticketInterno {
-            padding: 30px; border: 2px dashed #ccc;
-        }
+        /* Estilos A4 y Combo */
+        .res-a4-box, .res-combo-box { display: none; background: #fff; border: 1px solid #ffe0e9; border-radius: 10px; padding: 10px; margin-top: 10px; font-size: 12px; }
+        .res-a4-line { display: flex; justify-content: space-between; margin-bottom: 5px; color: #555; }
+        .res-a4-val { font-weight: bold; color: var(--rosa-brand); }
+        .res-combo-final { text-align: center; font-size: 18px; font-weight: 700; color: var(--menta-brand); margin-top: 5px; }
 
-        /* =========================================
-           CORRECCIÓN PARA CELULARES (RESPONSIVE)
-        ========================================= */
         @media (max-width: 768px) {
-            body { padding: 10px; } /* Menos margen en celular */
-            .container {
-                flex-direction: column; /* Apilar verticalmente */
-                align-items: center; /* Centrar todo */
-            }
-            .left-panel, .right-panel, .bottom-panel {
-                width: 100%; /* Ocupar todo el ancho */
-                flex: none; /* Resetear tamaños flexibles */
-                min-width: 0; /* Evitar desbordes */
-                max-width: 100%; /* Asegurar que no se pasen */
-            }
-            /* Ajuste para que los 3 botones finales entren bien */
+            body { padding: 10px; }
+            .container { flex-direction: column; align-items: center; }
+            .left-panel, .right-panel, .bottom-panel { width: 100%; flex: none; }
             .action-row { gap: 5px; }
-            .btn-final { padding: 8px 5px; font-size: 10px; }
         }
     </style>
 </head>
-<body>
+<body onload="iniciarApp()">
 
 <h1>🍩 Calculadora Donatte</h1>
 
@@ -165,33 +138,61 @@
     <div class="card left-panel">
         <h3 style="margin-top:0; border:none; color:var(--rosa-brand);">1. Datos del Pedido</h3>
         <label>💖 Nombre del Proyecto:</label>
-        <input type="text" id="inpNombre" placeholder="Ej: Topper Torta">
+        <input type="text" id="inpNombre" placeholder="Ej: Agenda 2025">
 
         <label>💰 Precio de tu hora ($):</label>
-        <input type="number" id="inpHora" placeholder="Ej: 5000" value="5000">
+        <input type="number" id="inpHora" placeholder="Ej: 5000" onchange="guardarConfig()">
 
         <h3>2. Materiales</h3>
-        <div id="listaMateriales">
-            <div class="row mat-item">
-                <input type="text" class="m-nom" placeholder="Ej: Papel Fotográfico">
-                <input type="number" class="m-val" placeholder="$ Costo">
-            </div>
+        <div class="row">
+            <select id="selectMateriales" onchange="prepararMaterial()">
+                <option value="">Selecciona un material...</option>
+            </select>
+            <button class="btn-small btn-new-mat" onclick="toggleNuevoMat()" title="Crear Nuevo">+</button>
         </div>
-        <button class="btn-small btn-add" onclick="nuevoMaterial()">+ Agregar otro material</button>
 
-        <h3>3. Tiempo y Diseño</h3>
+        <div id="formNuevoMat" class="mini-form">
+            <strong style="color:var(--menta-brand)">Nuevo Material:</strong>
+            <input type="text" id="newMatNombre" placeholder="Nombre (Ej: Vinilo)">
+            <input type="number" id="newMatPrecio" placeholder="Precio ($)">
+            <button class="btn-small btn-add" style="margin-top:5px;" onclick="guardarMaterialEnDb()">💾 Guardar en Memoria</button>
+        </div>
+
+        <div class="row" style="margin-top:5px;">
+            <input type="number" id="matCant" placeholder="Cant." style="width: 70px; margin-right:5px;" value="1">
+            <input type="number" id="matCostoActual" placeholder="Costo Unit. ($)" style="width: 100px;">
+            <button class="btn-small btn-add" onclick="agregarMaterialAlPresupuesto()">⬇️ Agregar</button>
+        </div>
+
+        <div id="listaMaterialesVisual">
+            <div style="text-align:center; color:#ccc; font-style:italic;">No hay materiales agregados</div>
+        </div>
+
+        <h3>3. Desgaste y Equipos</h3>
         <div class="row">
             <div class="col-50">
-                <label>⏱️ Minutos trabajados:</label>
+                <label>Costo x Hoja ($):</label>
+                <input type="number" id="inpDesgasteCosto" placeholder="Ej: 500" onchange="guardarConfig()">
+            </div>
+            <div class="col-50">
+                <label>Cant. Hojas:</label>
+                <input type="number" id="inpDesgasteCant" placeholder="Ej: 10">
+            </div>
+        </div>
+
+        <h3>4. Tiempo y Diseño</h3>
+        <div class="row">
+            <div class="col-50">
+                <label>⏱️ Minutos:</label>
                 <input type="number" id="inpMinutos" placeholder="Ej: 30">
             </div>
             <div class="col-50">
-                <label>🎨 Costo Diseño ($):</label>
-                <input type="number" id="inpDiseno" placeholder="Ej: 1000">
+                <label>🎨 Diseño ($):</label>
+                <input type="number" id="inpDiseno" placeholder="Ej: 1500">
             </div>
         </div>
 
-        <h3>4. Rentabilidad</h3>
+        <h3>5. Rentabilidad</h3>
         <label>📈 Porcentaje Ganancia (%):</label>
         <input type="number" id="inpGanancia" value="35">
 
@@ -199,10 +200,11 @@
 
         <div id="boxResultado" class="result-area" style="display:none;">
             
-            <strong style="font-size:11px; color:var(--rosa-brand); display:block; margin-bottom:5px;">LISTA DE MATERIALES:</strong>
-            <div id="displayListaMateriales" class="res-list-container"></div>
+            <strong style="font-size:11px; color:var(--rosa-brand); display:block; margin-bottom:5px;">Detalle Materiales:</strong>
+            <div id="resListaMateriales" class="res-list-container"></div>
 
-            <div class="res-row"><span>Total Materiales:</span> <span id="txtMatTotal" style="font-weight:600;">$0</span></div>
+            <div class="res-row" style="margin-top:8px;"><span>Total Materiales:</span> <span id="txtMatTotal" style="font-weight:600;">$0</span></div>
+            <div class="res-row"><span>Desgaste:</span> <span id="txtDesgaste">$0</span></div>
             <div class="res-row"><span>Mano de Obra:</span> <span id="txtMano">$0</span></div>
             <div class="res-row"><span>Diseño:</span> <span id="txtDiseno">$0</span></div>
             
@@ -212,12 +214,13 @@
             <div class="res-divider"></div>
 
             <div class="res-final">
-                <span style="font-size:12px; color:#555; font-weight:500;">PRECIO VENTA:</span> 
+                <span style="font-size:12px; color:#555; font-weight:500;">VENTA:</span> 
                 <span id="txtTotal">$0</span>
             </div>
             
             <div class="action-row">
-                <button class="btn-final btn-save" id="btnGuardar" onclick="guardar()">💾 Guardar</button>
+                <button class="btn-final btn-whatsapp" onclick="copiarWhatsapp()">📱 WhatsApp</button>
+                <button class="btn-final btn-save" onclick="guardarHistorial()">💾 Guardar</button>
                 <button class="btn-final btn-client" onclick="descargarCliente()">📄 Cliente</button>
                 <button class="btn-final btn-internal" onclick="descargarInterno()">📋 Para Mí</button>
             </div>
@@ -225,30 +228,63 @@
     </div>
 
     <div class="card right-panel">
-        <h4>🍬 Calc. Rápida</h4>
+        <h4>🍬 Calc. Unitarios</h4>
         <p style="font-size:10px; text-align:center; color:#888;">Unitarios sin salir.</p>
-        <label>Precio Paquete ($):</label>
+        <label>Precio Paquete/Total ($):</label>
         <input type="number" id="auxPrecio" placeholder="Ej: 12000">
         <label>Cantidad que trae:</label>
-        <input type="number" id="auxCant" placeholder="Ej: 500">
+        <input type="number" id="auxCant" placeholder="Ej: 100">
         <button class="btn-aux" onclick="calcUnitario()">1. Sacar Unitario</button>
-        <div id="resUnitario" style="text-align:center; margin-top:8px; font-weight:700; color: var(--menta-brand); display:none; font-size: 14px;"></div>
-        <hr style="border: 0; border-top: 1px dashed #b2dfdb; margin: 15px 0;">
-        <label>¿Cuántas usaste?</label>
-        <input type="number" id="auxUsadas" placeholder="Ej: 8">
-        <button class="btn-aux" style="background:#4db6ac;" onclick="calcTotalMat()">2. Calcular Total</button>
-        <div id="resTotalMat" style="text-align:center; margin-top:8px; font-weight:700; color: var(--rosa-brand); font-size:16px; display:none;"></div>
+        <div id="resUnitario" style="text-align:center; margin-top:8px; font-weight:700; color: var(--menta-brand); display:none; font-size: 16px;"></div>
+
+        <div style="margin-top:15px; border-top: 1px dashed #b2dfdb; padding-top:10px;">
+            <label style="font-size:11px; color:#00897b;">¿Cuántas vas a usar?</label>
+            <div class="row">
+                <input type="number" id="auxUsadas" placeholder="Cant." style="width: 70px;">
+                <button class="btn-aux" style="background:#4db6ac; margin-top:3px; flex:1; font-size:11px;" onclick="calcTotalUsado()">Calcular Costo</button>
+            </div>
+            <div id="resTotalUsado" style="text-align:center; font-weight:700; color:var(--rosa-brand); margin-top:5px; font-size:14px; display:none;"></div>
+        </div>
+
+        <div style="border-top: 2px dashed #ff8fa9; margin-top: 25px; padding-top: 10px;">
+            <h4>📏 Calculadora A4</h4>
+            <div class="row">
+                <div class="col-50"><label>Ancho:</label><input type="number" id="a4Ancho" placeholder="cm"></div>
+                <div class="col-50"><label>Alto:</label><input type="number" id="a4Alto" placeholder="cm"></div>
+            </div>
+            <button class="btn-aux" style="background: var(--rosa-brand); margin-top: 10px;" onclick="calcA4()">📐 Calcular</button>
+            <div id="resA4Box" class="res-a4-box">
+                <div class="res-a4-line"><span>📄 Vertical:</span><span id="valVert" class="res-a4-val">0 u.</span></div>
+                <div class="res-a4-line" style="border-top:1px dashed #eee; padding-top:5px;"><span>📄 Horizontal:</span><span id="valHor" class="res-a4-val">0 u.</span></div>
+            </div>
+        </div>
+
+        <div style="border-top: 2px dashed #ff8fa9; margin-top: 25px; padding-top: 10px;">
+            <h4>🎁 Generador de Combos</h4>
+            <label>Producto 1 ($):</label>
+            <input type="number" id="comboP1" placeholder="Ej: 15000">
+            <label>Producto 2 ($):</label>
+            <input type="number" id="comboP2" placeholder="Ej: 8000">
+            <label>Descuento (%):</label>
+            <input type="number" id="comboDesc" placeholder="Ej: 10">
+            <button class="btn-aux" style="background: #ba68c8; margin-top: 10px;" onclick="calcCombo()">✨ Calcular Combo</button>
+            <div id="resCombo" class="res-combo-box">
+                <div class="res-a4-line"><span>Total Real:</span><span id="comboReal">$0</span></div>
+                <div class="res-a4-line"><span>Descuento:</span><span id="comboAhorro" style="color:var(--verde-venta)">-$0</span></div>
+                <div class="res-divider"></div>
+                <div class="res-combo-final" id="comboFinal">$0</div>
+            </div>
+        </div>
     </div>
 
     <div class="card bottom-panel">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color: #8d6e63; border:none;">📂 Historial</h3>
+            <h3 style="margin:0; color: #8d6e63; border:none;">📂 Últimos Pedidos</h3>
             <button class="btn-small" style="background:#f1f1f1; color:#999;" onclick="borrarTodo()">Limpiar</button>
         </div>
         <table id="tablaHistorial">
             <thead>
                 <tr>
-                    <th>Fecha</th>
                     <th>Proyecto</th>
                     <th>Total</th>
                     <th>Ver</th>
@@ -256,7 +292,6 @@
             </thead>
             <tbody id="bodyHistorial"></tbody>
         </table>
-        <button onclick="reiniciarFabrica()" style="background:none; border:none; color:#ddd; font-size:10px; width:100%; margin-top:20px;">Reiniciar App</button>
     </div>
 
 </div>
@@ -265,14 +300,16 @@
     <div class="modal-box">
         <span class="close-btn" onclick="cerrarModal()">&times;</span>
         <h3 id="mTitulo" style="color:var(--rosa-brand); margin-top:0;">Detalle</h3>
-        <div style="background:#f9f9f9; padding:10px; border-radius:10px; margin-bottom:10px;">
-            <strong style="font-size:11px;">Materiales:</strong>
+        <span id="mFecha" style="font-size:11px; color:#999;"></span>
+        <div style="background:#f9f9f9; padding:10px; border-radius:10px; margin:10px 0;">
+            <strong style="font-size:11px;">Materiales Usados:</strong>
             <ul id="mMateriales" style="padding-left:15px; margin:5px 0; font-size:12px; color:#555;"></ul>
         </div>
         <div style="font-size:13px;">
+            <p>Desgaste Imp.: <strong id="mDesgaste"></strong></p>
             <p>Mano de Obra: <strong id="mMano"></strong></p>
             <p>Diseño: <strong id="mDiseno"></strong></p>
-            <p>Ganancia: <strong id="mGanancia"></strong></p>
+            <p>Ganancia (<span id="mPorc"></span>%): <strong id="mGanancia"></strong></p>
         </div>
         <hr style="border:0; border-top:1px dashed #ccc;">
         <h2 id="mTotal" style="text-align:center; color:var(--verde-venta); font-size:22px;"></h2>
@@ -302,10 +339,11 @@
         <strong>Proyecto:</strong> <span id="ti_nombre"></span><br>
         <span style="font-size:11px; color:#999;" id="ti_fecha"></span>
     </div>
-    <strong style="font-size:12px;">Desglose Materiales:</strong>
+    <strong style="font-size:12px;">Materiales:</strong>
     <ul id="ti_listaMats" style="font-size:12px; margin-top:5px; padding-left:20px; color:#666;"></ul>
     <div style="background:#f5f5f5; padding:10px; border-radius:5px; margin-top:10px; font-size:13px;">
         <div style="display:flex; justify-content:space-between;"><span>Mat. Totales:</span> <span id="ti_matTotal"></span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Desgaste:</span> <span id="ti_desgaste"></span></div>
         <div style="display:flex; justify-content:space-between;"><span>Mano Obra:</span> <span id="ti_mano"></span></div>
         <div style="display:flex; justify-content:space-between;"><span>Diseño:</span> <span id="ti_diseno"></span></div>
     </div>
@@ -322,78 +360,141 @@
 </div>
 
 <script>
-    // --- LÓGICA V13 (Con Fix Móvil) ---
-    let ultimoTotal = 0;
-    let datosTicket = {};
+    // --- LÓGICA V26 (NO DECIMALES + LISTA VISIBLE) ---
+    
+    let materialesPresupuesto = []; 
+    let dbMateriales = []; 
+    let datosGlobales = {}; 
 
-    function getNum(id) {
-        let val = document.getElementById(id).value;
-        return (val === "" || val === null) ? 0 : parseFloat(val);
+    function iniciarApp() {
+        let savedMats = localStorage.getItem("donatte_materiales_db");
+        if(savedMats) { dbMateriales = JSON.parse(savedMats); } else {
+            dbMateriales = [{nombre: "Hoja A4 Opalina", precio: 50}, {nombre: "Hoja A4 Fotográfico", precio: 120}, {nombre: "Laminado", precio: 80}];
+        }
+        actualizarDropdown();
+        let config = JSON.parse(localStorage.getItem("donatte_config") || "{}");
+        if(config.hora) document.getElementById("inpHora").value = config.hora;
+        if(config.desgaste) document.getElementById("inpDesgasteCosto").value = config.desgaste;
+        cargarTabla();
     }
 
+    function guardarConfig() {
+        let config = { hora: document.getElementById("inpHora").value, desgaste: document.getElementById("inpDesgasteCosto").value };
+        localStorage.setItem("donatte_config", JSON.stringify(config));
+    }
+
+    function actualizarDropdown() {
+        let select = document.getElementById("selectMateriales");
+        select.innerHTML = '<option value="">Selecciona un material...</option>';
+        dbMateriales.forEach((mat, index) => {
+            let opt = document.createElement("option"); opt.value = index; opt.text = `${mat.nombre} - $${mat.precio}`; select.appendChild(opt);
+        });
+    }
+    function prepararMaterial() {
+        let index = document.getElementById("selectMateriales").value;
+        if(index !== "") { document.getElementById("matCostoActual").value = dbMateriales[index].precio; }
+    }
+    function toggleNuevoMat() {
+        let form = document.getElementById("formNuevoMat"); form.style.display = form.style.display === "block" ? "none" : "block";
+    }
+    function guardarMaterialEnDb() {
+        let nombre = document.getElementById("newMatNombre").value;
+        let precio = parseFloat(document.getElementById("newMatPrecio").value);
+        if(nombre && precio) {
+            dbMateriales.push({nombre: nombre, precio: precio});
+            localStorage.setItem("donatte_materiales_db", JSON.stringify(dbMateriales));
+            actualizarDropdown();
+            document.getElementById("formNuevoMat").style.display = "none";
+            alert("Material guardado! 🧠");
+        }
+    }
+
+    function agregarMaterialAlPresupuesto() {
+        let select = document.getElementById("selectMateriales");
+        let costoUnitario = parseFloat(document.getElementById("matCostoActual").value);
+        let cantidad = parseFloat(document.getElementById("matCant").value) || 1;
+        let nombreMaterial = select.value !== "" ? dbMateriales[select.value].nombre : "Material Personalizado";
+
+        if(costoUnitario > 0) {
+            let precioTotal = costoUnitario * cantidad;
+            let nombreDisplay = cantidad > 1 ? `${nombreMaterial} (x${cantidad})` : nombreMaterial;
+
+            materialesPresupuesto.push({nombre: nombreDisplay, precio: precioTotal});
+            renderizarListaVisual();
+            select.value = ""; document.getElementById("matCostoActual").value = ""; document.getElementById("matCant").value = "1"; 
+        }
+    }
+
+    function renderizarListaVisual() {
+        let container = document.getElementById("listaMaterialesVisual"); container.innerHTML = "";
+        if(materialesPresupuesto.length === 0) { container.innerHTML = '<div style="text-align:center; color:#ccc;">No hay materiales</div>'; return; }
+        materialesPresupuesto.forEach((item, index) => {
+            let div = document.createElement("div"); div.className = "mat-agregado-row";
+            div.innerHTML = `<span>${item.nombre}</span><div style="display:flex;gap:10px;"><strong>$${item.precio}</strong><button class="btn-remove" onclick="borrarMaterial(${index})">✕</button></div>`;
+            container.appendChild(div);
+        });
+    }
+    function borrarMaterial(index) { materialesPresupuesto.splice(index, 1); renderizarListaVisual(); }
+
+    // --- FORMATEO ESTRICTO (ADIOS .00) ---
     function formatMoney(amount) {
         let num = parseFloat(amount);
-        return (num % 1 === 0) ? "$" + num.toFixed(0) : "$" + num.toFixed(2);
-    }
-
-    function nuevoMaterial() {
-        let div = document.createElement("div");
-        div.className = "row mat-item";
-        div.innerHTML = `
-            <input type="text" class="m-nom" placeholder="Material">
-            <input type="number" class="m-val" placeholder="$">
-            <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
-        `;
-        document.getElementById("listaMateriales").appendChild(div);
+        // Redondeo preventivo
+        num = Math.round(num * 100) / 100;
+        
+        if (Number.isInteger(num)) {
+            return "$" + num.toFixed(0); // Sin decimales si es entero
+        } else {
+            return "$" + num.toFixed(2); // Solo si tiene centavos reales
+        }
     }
 
     function calcular() {
         try {
-            let totalMat = 0;
-            let listaHTML = ""; 
-            let listaArray = [];
+            let totalMat = materialesPresupuesto.reduce((sum, item) => sum + item.precio, 0);
+            let costoDesgaste = parseFloat(document.getElementById("inpDesgasteCosto").value) || 0;
+            let cantDesgaste = parseFloat(document.getElementById("inpDesgasteCant").value) || 0;
+            let totalDesgaste = costoDesgaste * cantDesgaste;
+            let valorHora = parseFloat(document.getElementById("inpHora").value) || 0;
+            let minutos = parseFloat(document.getElementById("inpMinutos").value) || 0;
+            let totalMano = (valorHora / 60) * minutos;
+            let diseno = parseFloat(document.getElementById("inpDiseno").value) || 0;
+            
+            let gananciaPorc = parseFloat(document.getElementById("inpGanancia").value) || 0;
 
-            document.querySelectorAll(".mat-item").forEach(row => {
-                let nombre = row.querySelector(".m-nom").value || "Material";
-                let valor = parseFloat(row.querySelector(".m-val").value) || 0;
-                if(valor > 0) {
-                    totalMat += valor;
-                    listaHTML += `<div class="res-list-item"><span>${nombre}</span> <span>${formatMoney(valor)}</span></div>`;
-                    listaArray.push({n: nombre, v: valor});
-                }
-            });
-
-            if(listaHTML === "") listaHTML = "<span style='font-size:11px; color:#999;'>Sin materiales detallados</span>";
-
-            let valorHora = getNum("inpHora");
-            let minutos = getNum("inpMinutos");
-            let costoMano = (valorHora / 60) * minutos;
-            let diseno = getNum("inpDiseno");
-            let gananciaPorc = getNum("inpGanancia");
-
-            let costoPuro = totalMat + costoMano + diseno;
+            let costoPuro = totalMat + totalDesgaste + totalMano + diseno;
             let gananciaDinero = costoPuro * (gananciaPorc / 100);
             let precioFinal = costoPuro + gananciaDinero;
 
-            ultimoTotal = precioFinal;
+            // 1. Mostrar Lista de Materiales en el Resultado (NUEVO)
+            let listaHTML = "";
+            materialesPresupuesto.forEach(m => {
+                listaHTML += `<div class="res-list-item"><span>${m.nombre}</span> <span>${formatMoney(m.precio)}</span></div>`;
+            });
+            if(listaHTML === "") listaHTML = "<span style='font-size:10px; color:#999;'>Sin materiales</span>";
+            document.getElementById("resListaMateriales").innerHTML = listaHTML;
 
-            document.getElementById("displayListaMateriales").innerHTML = listaHTML;
+            // 2. Mostrar Valores Totales
             document.getElementById("txtMatTotal").innerText = formatMoney(totalMat);
-            document.getElementById("txtMano").innerText = formatMoney(costoMano);
+            document.getElementById("txtDesgaste").innerText = formatMoney(totalDesgaste);
+            document.getElementById("txtMano").innerText = formatMoney(totalMano);
             document.getElementById("txtDiseno").innerText = formatMoney(diseno);
             document.getElementById("txtCosto").innerText = formatMoney(costoPuro);
             document.getElementById("txtGanancia").innerText = formatMoney(gananciaDinero);
             document.getElementById("txtTotal").innerText = formatMoney(precioFinal);
+            
             document.getElementById("boxResultado").style.display = "block";
             
-            datosTicket = {
+            datosGlobales = {
                 nombre: document.getElementById("inpNombre").value || "Sin Nombre",
                 fecha: new Date().toLocaleDateString(),
-                matsList: listaArray,
-                matTotal: totalMat,
-                mano: costoMano,
+                listaMateriales: [...materialesPresupuesto], 
+                totalMat: totalMat,
+                totalDesgaste: totalDesgaste,
+                totalMano: totalMano,
                 diseno: diseno,
                 costoPuro: costoPuro,
+                gananciaPorc: gananciaPorc, 
                 ganancia: gananciaDinero,
                 total: precioFinal
             };
@@ -401,91 +502,128 @@
         } catch (error) { alert("Error: " + error.message); }
     }
 
+    function copiarWhatsapp() {
+        let nombre = document.getElementById("inpNombre").value || "Tu Pedido";
+        let total = document.getElementById("txtTotal").innerText;
+        let texto = `Hola! 👋\n\nTu presupuesto por *${nombre}* es de *${total}*.\nIncluye diseño, materiales y armado.\nTrabajamos con 50% de seña. 🍩\n\n¿Te tomo el pedido?`;
+        navigator.clipboard.writeText(texto).then(() => { alert("Texto copiado! Pégalo en WhatsApp 📲"); });
+    }
+
     function generarImagen(elementId, nombreArchivo) {
         const ticket = document.getElementById(elementId);
         ticket.style.position = "fixed"; ticket.style.left = "0"; ticket.style.zIndex = "9999";
         html2canvas(ticket).then(canvas => {
-            let link = document.createElement('a');
-            link.download = nombreArchivo;
-            link.href = canvas.toDataURL("image/png");
-            link.click();
+            let link = document.createElement('a'); link.download = nombreArchivo; link.href = canvas.toDataURL("image/png"); link.click();
             ticket.style.position = "absolute"; ticket.style.left = "-9999px";
         });
     }
 
     function descargarCliente() {
-        if(!datosTicket.total) return alert("Primero calcula el precio");
-        document.getElementById("tc_nombre").innerText = datosTicket.nombre;
-        document.getElementById("tc_total").innerText = formatMoney(datosTicket.total);
+        if(!datosGlobales.total) return alert("Primero calcula");
+        document.getElementById("tc_nombre").innerText = datosGlobales.nombre;
+        document.getElementById("tc_total").innerText = formatMoney(datosGlobales.total);
         generarImagen("ticketCliente", "Presupuesto-Cliente.png");
     }
 
     function descargarInterno() {
-        if(!datosTicket.total) return alert("Primero calcula el precio");
-        document.getElementById("ti_nombre").innerText = datosTicket.nombre;
-        document.getElementById("ti_fecha").innerText = datosTicket.fecha;
-        let ul = document.getElementById("ti_listaMats");
-        ul.innerHTML = "";
-        datosTicket.matsList.forEach(m => { ul.innerHTML += `<li>${m.n}: ${formatMoney(m.v)}</li>`; });
-        document.getElementById("ti_matTotal").innerText = formatMoney(datosTicket.matTotal);
-        document.getElementById("ti_mano").innerText = formatMoney(datosTicket.mano);
-        document.getElementById("ti_diseno").innerText = formatMoney(datosTicket.diseno);
-        document.getElementById("ti_costo").innerText = formatMoney(datosTicket.costoPuro);
-        document.getElementById("ti_ganancia").innerText = formatMoney(datosTicket.ganancia);
-        document.getElementById("ti_total").innerText = formatMoney(datosTicket.total);
-        generarImagen("ticketInterno", "Ficha-Interna-Donatte.png");
+        if(!datosGlobales.total) return alert("Primero calcula");
+        document.getElementById("ti_nombre").innerText = datosGlobales.nombre;
+        document.getElementById("ti_fecha").innerText = datosGlobales.fecha;
+        let ul = document.getElementById("ti_listaMats"); ul.innerHTML = "";
+        datosGlobales.listaMateriales.forEach(m => { ul.innerHTML += `<li>${m.nombre}: $${m.precio}</li>`; });
+
+        document.getElementById("ti_matTotal").innerText = formatMoney(datosGlobales.totalMat);
+        document.getElementById("ti_desgaste").innerText = formatMoney(datosGlobales.totalDesgaste);
+        document.getElementById("ti_mano").innerText = formatMoney(datosGlobales.totalMano);
+        document.getElementById("ti_diseno").innerText = formatMoney(datosGlobales.diseno);
+        document.getElementById("ti_costo").innerText = formatMoney(datosGlobales.costoPuro);
+        document.getElementById("ti_ganancia").innerText = formatMoney(datosGlobales.ganancia);
+        document.getElementById("ti_total").innerText = formatMoney(datosGlobales.total);
+        generarImagen("ticketInterno", "Ficha-Interna.png");
     }
 
-    function guardar() {
-        let nuevoItem = { id: Date.now(), ...datosTicket };
-        let historial = JSON.parse(localStorage.getItem("appDonatte_v13") || "[]");
+    function guardarHistorial() {
+        if(!datosGlobales.total) return alert("Calcula primero");
+        let nuevoItem = { ...datosGlobales, id: Date.now() }; 
+        let historial = JSON.parse(localStorage.getItem("donatte_historial_v26") || "[]"); // Nueva clave v26 para evitar conflictos
         historial.unshift(nuevoItem);
-        localStorage.setItem("appDonatte_v13", JSON.stringify(historial));
-        let btn = document.getElementById("btnGuardar");
-        let texto = btn.innerText;
-        btn.innerText = "¡Listo!";
-        setTimeout(() => { btn.innerText = texto; }, 2000);
+        localStorage.setItem("donatte_historial_v26", JSON.stringify(historial));
+        
+        let btn = document.querySelector(".btn-save");
+        let texto = btn.innerText; btn.innerText = "¡Listo!"; setTimeout(() => { btn.innerText = texto; }, 2000);
         cargarTabla();
     }
 
     function cargarTabla() {
-        let tbody = document.getElementById("bodyHistorial");
-        tbody.innerHTML = "";
-        let historial = JSON.parse(localStorage.getItem("appDonatte_v13") || "[]");
+        let tbody = document.getElementById("bodyHistorial"); tbody.innerHTML = "";
+        let historial = JSON.parse(localStorage.getItem("donatte_historial_v26") || "[]");
         historial.forEach((item, index) => {
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${item.fecha}</td><td>${item.nombre}</td><td style="font-weight:700; color:var(--verde-venta);">${formatMoney(item.total)}</td><td><button class="btn-small" style="background:#ede7f6; color:var(--menta-brand);" onclick="verDetalle(${index})">👁️</button></td>`;
+            tr.innerHTML = `<td>${item.nombre}</td><td style="color:var(--verde-venta); font-weight:bold;">${formatMoney(item.total)}</td><td><button class="btn-small" style="background:#ede7f6; color:var(--menta-brand);" onclick="verDetalle(${index})">👁️</button></td>`;
             tbody.appendChild(tr);
         });
     }
 
     function verDetalle(index) {
-        let item = JSON.parse(localStorage.getItem("appDonatte_v13"))[index];
+        let item = JSON.parse(localStorage.getItem("donatte_historial_v26"))[index];
         document.getElementById("mTitulo").innerText = item.nombre;
+        document.getElementById("mFecha").innerText = item.fecha;
         let ul = document.getElementById("mMateriales"); ul.innerHTML = "";
-        if(item.matsList) item.matsList.forEach(m => ul.innerHTML += `<li>${m.n}: ${formatMoney(m.v)}</li>`);
-        document.getElementById("mMano").innerText = formatMoney(item.mano);
+        if(item.listaMateriales && item.listaMateriales.length > 0) {
+            item.listaMateriales.forEach(m => ul.innerHTML += `<li>${m.nombre}: $${m.precio}</li>`);
+        } else { ul.innerHTML = "<li>Sin materiales detallados</li>"; }
+        document.getElementById("mDesgaste").innerText = formatMoney(item.totalDesgaste || 0);
+        document.getElementById("mMano").innerText = formatMoney(item.totalMano);
         document.getElementById("mDiseno").innerText = formatMoney(item.diseno);
+        document.getElementById("mPorc").innerText = item.gananciaPorc || "---"; 
         document.getElementById("mGanancia").innerText = formatMoney(item.ganancia);
         document.getElementById("mTotal").innerText = formatMoney(item.total);
         document.getElementById("modalDetalle").style.display = "flex";
     }
 
     function cerrarModal() { document.getElementById("modalDetalle").style.display = "none"; }
+    function borrarTodo() { if(confirm("¿Borrar todo?")) { localStorage.removeItem("donatte_historial_v26"); cargarTabla(); }}
+
     function calcUnitario() {
-        let p = getNum("auxPrecio"), c = getNum("auxCant"); if(c===0)c=1;
+        let p = parseFloat(document.getElementById("auxPrecio").value) || 0;
+        let c = parseFloat(document.getElementById("auxCant").value) || 1;
         document.getElementById("resUnitario").innerText = formatMoney(p/c) + " c/u";
         document.getElementById("resUnitario").style.display = "block";
     }
-    function calcTotalMat() {
-        let p=getNum("auxPrecio"), c=getNum("auxCant"), u=getNum("auxUsadas"); if(c===0)c=1;
-        document.getElementById("resTotalMat").innerText = "Total: " + formatMoney((p/c)*u);
-        document.getElementById("resTotalMat").style.display = "block";
+
+    function calcTotalUsado() {
+        let p = parseFloat(document.getElementById("auxPrecio").value) || 0;
+        let c = parseFloat(document.getElementById("auxCant").value) || 1;
+        let u = parseFloat(document.getElementById("auxUsadas").value) || 0;
+        let total = (p / c) * u;
+        document.getElementById("resTotalUsado").innerText = "Costo: " + formatMoney(total);
+        document.getElementById("resTotalUsado").style.display = "block";
     }
-    function borrarTodo() { if(confirm("¿Borrar?")) { localStorage.removeItem("appDonatte_v13"); cargarTabla(); }}
-    function reiniciarFabrica() { if(confirm("¿Reset?")) { localStorage.clear(); location.reload(); }}
-    
-    cargarTabla();
+
+    function calcA4() {
+        let w = parseFloat(document.getElementById("a4Ancho").value) || 0;
+        let h = parseFloat(document.getElementById("a4Alto").value) || 0;
+        if(w === 0 || h === 0) return alert("Ingresa medidas");
+        const A4_W = 21, A4_H = 29.7;
+        let fitV = Math.floor(A4_W / w) * Math.floor(A4_H / h);
+        let fitH = Math.floor(A4_H / w) * Math.floor(A4_W / h);
+        document.getElementById("valVert").innerText = fitV + " u.";
+        document.getElementById("valHor").innerText = fitH + " u.";
+        document.getElementById("resA4Box").style.display = "block";
+    }
+
+    function calcCombo() {
+        let p1 = parseFloat(document.getElementById("comboP1").value) || 0;
+        let p2 = parseFloat(document.getElementById("comboP2").value) || 0;
+        let desc = parseFloat(document.getElementById("comboDesc").value) || 0;
+        let total = p1 + p2;
+        let ahorro = total * (desc / 100);
+        let final = total - ahorro;
+        document.getElementById("comboReal").innerText = formatMoney(total);
+        document.getElementById("comboAhorro").innerText = "-" + formatMoney(ahorro);
+        document.getElementById("comboFinal").innerText = formatMoney(final);
+        document.getElementById("resCombo").style.display = "block";
+    }
 </script>
 
 </body>
