@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Calculadora Donatte v77 (Stock)</title>
+    <title>Calculadora Donatte v83</title>
     
     <meta name="theme-color" content="#ff5983">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,25 +22,66 @@
             --p-amarillo: #fff9c4; --p-lila: #e1bee7; --p-aqua: #b2ebf2; --p-rosa: #f8bbd0;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: var(--fondo); color: var(--cafe-texto); margin: 0; padding: 20px; font-size: 14px; -webkit-tap-highlight-color: transparent; }
+        /* RESET RESPONSIVO */
+        * { box-sizing: border-box; }
+
+        body { font-family: 'Poppins', sans-serif; background-color: var(--fondo); color: var(--cafe-texto); margin: 0; padding: 15px; font-size: 14px; -webkit-tap-highlight-color: transparent; }
         
         /* HEADER */
-        .header-top { display: flex; justify-content: center; align-items: center; margin-bottom: 25px; padding: 0 5px; position: relative; min-height: 50px; }
-        .title-container { display: flex; align-items: center; justify-content: center; }
-        h1 { text-align: center; color: var(--rosa-brand); margin: 0; font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .logo-img-header { max-height: 60px; width: auto; object-fit: contain; margin-right: 10px; }
-        .header-btns { display: flex; gap: 8px; position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+        .header-top { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            margin-bottom: 25px; 
+            padding: 10px; 
+            position: relative; 
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex-wrap: wrap; /* Permite que baje en pantallas muy chicas */
+            gap: 10px;
+        }
+        
+        .title-wrapper { display: flex; align-items: center; gap: 10px; }
+
+        h1 { 
+            text-align: center; color: var(--rosa-brand); margin: 0; font-weight: 700; 
+            font-size: 22px; text-transform: uppercase; letter-spacing: 1px; line-height: 1;
+        }
+        
+        .logo-img-header { height: 45px; width: auto; object-fit: contain; }
+
+        /* Botones Header - Ajuste Desktop */
+        .header-btns { 
+            display: flex; gap: 8px; 
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%); 
+        }
+        
         .btn-circle { background: #fff; border: 2px solid #eee; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; color: #888; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;}
         .btn-circle:active { transform: scale(0.95); }
 
         h3 { color: var(--menta-brand); font-size: 16px; font-weight: 600; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px dashed #ffe0e9; padding-bottom: 5px;}
         h4 { color: var(--rosa-brand); margin-top: 0; margin-bottom: 15px; font-size: 16px; font-weight: 700;}
 
-        /* LAYOUT */
-        .container { display: flex; flex-wrap: wrap; gap: 25px; max-width: 1100px; margin: 0 auto; justify-content: center; align-items: flex-start; }
-        .left-panel { flex: 1; min-width: 340px; }
-        .right-panel { flex: 1; min-width: 340px; }
-        .bottom-panel { width: 100%; max-width: 1100px; margin: 25px auto 0; padding-bottom: 50px; }
+        /* LAYOUT RESPONSIVO (La corrección clave) */
+        .container { 
+            display: flex; 
+            flex-wrap: wrap; /* ESTO HACE LA MAGIA */
+            gap: 25px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            justify-content: center; 
+            align-items: flex-start; 
+        }
+        
+        /* Los paneles ocupan el espacio disponible pero tienen un ancho base ideal */
+        .left-panel, .right-panel { 
+            flex: 1 1 350px; /* Crece, se encoge, base 350px */
+            width: 100%; 
+            min-width: 300px; /* Evita que se rompa en celulares muy angostos */
+        }
+        
+        .bottom-panel { width: 100%; max-width: 1200px; margin: 25px auto 0; padding-bottom: 60px; }
 
         .card { background: var(--blanco); padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(255, 89, 131, 0.1); border: 1px solid #fff0f5; }
         .tool-section { background: #fff; padding: 20px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #fce4ec; margin-bottom: 25px; }
@@ -49,7 +90,7 @@
         
         input, select, textarea { 
             width: 100%; padding: 12px; border: 2px solid #fce4ec; 
-            border-radius: 12px; box-sizing: border-box; font-size: 16px;
+            border-radius: 12px; box-sizing: border-box; font-size: 15px; 
             font-family: inherit; color: var(--cafe-texto); background: #fffdfd; height: 50px;
         }
         textarea { height: 80px; resize: none; }
@@ -78,15 +119,15 @@
         .btn-aux { width: 100%; padding: 12px; background-color: var(--menta-brand); color: white; border-radius: 12px; margin-top: 15px; font-size: 13px;}
         .btn-pink { background-color: var(--rosa-brand); color: white; width: 100%; padding: 12px; border-radius: 12px; margin-top: 10px; font-size: 13px;}
         .btn-blue { background-color: #42a5f5; color: white; width: 100%; padding: 12px; border-radius: 12px; margin-top: 10px; font-size: 13px;}
-        
-        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border: none; }
-        
-        .action-row { display: flex; justify-content: space-between; gap: 5px; margin-top: 25px; flex-wrap: wrap;}
-        .btn-final { padding: 10px; border-radius: 12px; font-weight: 600; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 3px; color: var(--cafe-texto); box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex: 1; min-width: 70px; }
+        .btn-ai { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; box-shadow: 0 4px 10px rgba(118, 75, 162, 0.3); font-size: 15px; }
+
+        .action-row { display: flex; gap: 5px; margin-top: 25px; flex-wrap: wrap; justify-content: space-between; }
+        .btn-final { padding: 12px 10px; border-radius: 12px; font-weight: 600; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 5px; color: var(--cafe-texto); box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex: 1 1 30%; white-space: nowrap; } /* Botones flexibles */
         .btn-whatsapp { background-color: #dcf8c6; color: #2e7d32; border: 1px solid #c8e6c9;}
         .btn-save { background-color: var(--p-aqua); }
         .btn-client { background-color: var(--p-lila); }
         .btn-internal { background-color: var(--p-rosa); }
+        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border: none; }
 
         #listaMaterialesVisual, #listaKitVisual { margin-top: 15px; background: #fafafa; border-radius: 12px; padding: 15px; border: 1px dashed #e0e0e0; }
         .mat-agregado-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
@@ -110,21 +151,21 @@
         .status-info { background: #eeeeee; color: #757575; }
 
         /* MODALES */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-        .modal-box { background: white; padding: 30px; border-radius: 25px; width: 90%; max-width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 2px solid #ffe0e9; position: relative; max-height: 80vh; overflow-y: auto;}
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #ccc; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-box { background: white; padding: 25px; border-radius: 25px; width: 90%; max-width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 2px solid #ffe0e9; position: relative; max-height: 85vh; overflow-y: auto;}
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #ccc; z-index: 10;}
 
         /* STOCK MODAL */
         .stock-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .stock-name { font-weight: 600; flex: 2; }
-        .stock-input { width: 80px !important; height: 35px !important; text-align: center; margin: 0 10px; padding: 5px !important;}
+        .stock-name { font-weight: 600; flex: 2; font-size: 13px;}
+        .stock-input { width: 70px !important; height: 35px !important; text-align: center; margin: 0 5px; padding: 5px !important;}
         .stock-update-btn { background: var(--menta-brand); color: white; border-radius: 5px; padding: 5px 10px; font-size: 12px; }
 
         /* DASHBOARD STATS */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .stat-card { background: #f9f9f9; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #eee; }
-        .stat-val { font-size: 20px; font-weight: 800; color: var(--rosa-brand); display: block; margin-top: 5px; }
-        .stat-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-val { font-size: 18px; font-weight: 800; color: var(--rosa-brand); display: block; margin-top: 5px; word-break: break-word;}
+        .stat-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
         
         /* CATALOGO STYLES */
         .cat-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; }
@@ -133,7 +174,7 @@
         .cat-meta { font-size: 11px; color: #888; }
         .cat-detail { font-size: 11px; color: #7b1fa2; font-style: italic; margin-top: 2px; }
         .cat-profit { color: var(--verde-venta); font-size: 11px; font-weight: 600; }
-        .search-box { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 10px; border: 2px solid #eee; background: #fdfdfd; font-size: 14px; }
+        .search-box { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 2px solid #eee; background: #fdfdfd; font-size: 14px; }
 
         .promo-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
         .tag-btn { background: #fff; border: 2px solid var(--p-lila); color: #8e24aa; padding: 8px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; transition: 0.2s;}
@@ -145,11 +186,9 @@
         /* TICKETS & FLYER */
         .ticket-base { position: absolute; left: -9999px; top: 0; width: 450px; box-sizing: border-box; font-family: 'Poppins', sans-serif; color: var(--cafe-texto); }
         
-        /* TICKET CLIENTE */
         #ticketCliente { padding: 40px; background: #fff; border-top: 15px solid var(--rosa-brand); text-align: center; }
         .tc-logo { font-size: 28px; font-weight: 800; color: var(--rosa-brand); text-transform: uppercase; margin-top: 10px; letter-spacing: 2px; line-height: 1;}
         .tc-logo-img { max-width: 150px; max-height: 80px; object-fit: contain; display:block; margin: 0 auto; }
-        
         .tc-box { border: 3px dashed var(--rosa-claro); padding: 30px; border-radius: 20px; margin: 30px 0; }
         .tc-prod { font-size: 24px; font-weight: 700; color: #333; margin-bottom: 5px; text-transform: uppercase;}
         .tc-price { font-size: 55px; font-weight: 900; color: var(--verde-venta); margin: 10px 0; line-height: 1;}
@@ -184,20 +223,28 @@
         
         .section-header { color: #555; font-weight: 700; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
 
+        /* --- MEDIA QUERIES PARA CELULAR (SOLUCIÓN RESPONSIVA DEFINITIVA) --- */
         @media (max-width: 768px) {
             body { padding: 10px; }
+            
+            /* El Header se adapta para que no se encimen los botones */
+            .header-top { flex-direction: column; gap: 10px; height: auto; text-align: center; }
+            .header-btns { position: static; transform: none; margin-top: 5px; }
+            
+            /* Los paneles se apilan uno abajo del otro en vez de comprimirse */
             .container { flex-direction: column; }
-            .left-panel, .right-panel, .bottom-panel { width: 100%; min-width: 0; }
-            .action-row { gap: 5px; }
-            .btn-final { min-width: 80px; font-size: 11px; padding: 10px; }
+            .left-panel, .right-panel { width: 100%; min-width: 0; }
+            
+            /* Botones más amigables para el dedo */
+            .btn-final { flex: 1 1 45%; } /* Ocupan 50% aprox en móvil */
         }
     </style>
 </head>
 <body onload="iniciarApp()">
 
 <div class="header-top">
-    <div class="title-container" id="titleContainer">
-        <h1 id="appTitleText">🍩 Calculadora Donatte</h1>
+    <div class="title-wrapper" id="titleWrapper">
+        <h1 id="appTitleText" title="Nombre de la App">🍩 Calculadora Donatte</h1>
     </div>
     <div class="header-btns">
         <button class="btn-circle" onclick="mostrarInstrucciones()" title="Instalar App">📲</button>
@@ -209,29 +256,29 @@
 <div class="container">
     
     <div class="card left-panel">
-        <h3 style="margin-top:0; border:none; color:var(--rosa-brand);">1. Proyecto / Producto</h3>
-        <label>💖 Nombre (lo que verá el cliente):</label>
-        <input type="text" id="inpNombre" placeholder="Ej: Kit Cumpleaños Plim Plim">
+        <h3 style="margin-top:0; border:none; color:var(--rosa-brand);">👤 Cliente / Proyecto</h3>
+        <label>💖 Nombre del Cliente:</label>
+        <input type="text" id="inpNombre" placeholder="Ej: Juan Perez - Kit Cumpleaños" title="Escribe aquí el nombre del cliente o del proyecto">
 
         <label>💰 Precio de tu hora ($):</label>
-        <input type="number" id="inpHora" placeholder="5000">
+        <input type="number" id="inpHora" placeholder="5000" title="Cuánto quieres ganar por hora de trabajo manual">
 
         <h3>2. Materiales</h3>
         <label style="color:#26c6da;">2.1 Insumos (Papel, Tinta...)</label>
         <div class="row">
-            <select id="selectMateriales" onchange="prepararMaterial()">
+            <select id="selectMateriales" onchange="prepararMaterial()" title="Elige un material de tu lista">
                 <option value="">Selecciona insumo...</option>
             </select>
-            <button class="btn-stock" onclick="abrirModalStock()" title="Ver Stock">📦</button>
-            <button class="btn-trash" onclick="borrarMaterialDb()">🗑️</button>
-            <button class="btn-small btn-new-mat" onclick="toggleNuevoMat()">+</button>
+            <button class="btn-stock" onclick="abrirModalStock()" title="Gestionar Stock de Insumos">📦</button>
+            <button class="btn-trash" onclick="borrarMaterialDb()" title="Borrar este insumo de la lista">🗑️</button>
+            <button class="btn-small btn-new-mat" onclick="toggleNuevoMat()" title="Crear un nuevo insumo">+</button>
         </div>
 
         <div id="formNuevoMat" class="mini-form">
             <strong style="color:var(--menta-brand)">Nuevo Insumo:</strong>
             <div class="row">
                 <input type="text" id="newMatNombre" placeholder="Nombre (Ej: Vinilo)" style="flex:2;">
-                <input type="number" id="newMatPrecio" placeholder="$" style="flex:1;">
+                <input type="number" id="newMatPrecio" placeholder="Precio" style="flex:1;">
             </div>
             <label style="margin-top:5px;">Stock Inicial:</label>
             <input type="number" id="newMatStock" placeholder="Cant. disponible (Ej: 100)" value="0">
@@ -239,15 +286,16 @@
         </div>
 
         <div class="row" style="margin-top:5px;">
-            <input type="number" id="matCant" placeholder="Cant." style="flex:1;" value="1">
-            <input type="number" id="matCostoActual" placeholder="Costo Unit." style="flex:2;">
-            <button class="btn-small btn-add" onclick="agregarMaterialAlPresupuesto()">⬇️ Agregar</button>
+            <input type="number" id="matCant" placeholder="Cant." style="flex:1;" value="1" title="Cantidad a usar">
+            <input type="number" id="matCostoActual" placeholder="Costo Unit." style="flex:2;" title="Costo por unidad">
+            <button class="btn-small btn-add" onclick="agregarMaterialAlPresupuesto()" title="Sumar al presupuesto">⬇️ Agregar</button>
         </div>
 
         <div style="border-top:1px dashed #ccc; margin-top:15px; padding-top:10px;">
-            <label style="color:#e65100;">2.2 Mis Productos (Ya calculados)</label>
+            <label style="color:#e65100;">📦 Cargar Producto Directo (Ya calculado)</label>
+            <p style="font-size:11px; color:#888; margin-bottom:5px;">Usa esto si ya tienes el precio final y no quieres calcular materiales.</p>
             
-            <button class="btn-catalog" onclick="abrirCatalogo()">📖 Ver Catálogo Completo</button>
+            <button class="btn-catalog" onclick="abrirCatalogo()" title="Ver y editar todos tus productos guardados">📖 Ver Catálogo Completo</button>
 
             <div class="row">
                 <select id="selectProductosGuardados">
@@ -255,19 +303,15 @@
                 </select>
             </div>
             
-            <label style="color:#888; font-size:11px; margin-top:5px;">O agrega uno manual:</label>
+            <label style="color:#888; font-size:11px; margin-top:5px;">O agrega uno manual rápido:</label>
             <div class="row">
-                <input type="text" id="prodManualNombre" placeholder="Nombre" style="flex:2;">
-                <input type="number" id="prodManualPrecio" placeholder="$" style="flex:1;">
-            </div>
-            <div class="row">
-                 <input type="text" id="prodManualDetalle" placeholder="Detalles (Opcional)" style="flex:3;">
-                 <button class="btn-save-mini" onclick="guardarProductoManualDb()" title="Guardar para usar en Kits">💾</button>
+                <input type="text" id="prodManualNombre" placeholder="Nombre (Ej: Taza)" style="flex:2;">
+                <input type="number" id="prodManualPrecio" placeholder="$ Precio Final" style="flex:1;">
             </div>
             
             <div class="row">
                 <input type="number" id="prodCant" placeholder="Cant." style="width:70px;" value="1">
-                <button class="btn-small btn-product" style="flex:1; height:45px;" onclick="agregarProductoAlPresupuesto()">📦 Agregar al Presupuesto</button>
+                <button class="btn-small btn-product" style="flex:1; height:45px;" onclick="agregarProductoAlPresupuesto()" title="Agregar este producto terminado al presupuesto">📦 Agregar al Presupuesto</button>
             </div>
         </div>
 
@@ -279,11 +323,11 @@
         <div class="row">
             <div class="col-50">
                 <label>Costo x Hoja ($):</label>
-                <input type="number" id="inpDesgasteCosto" placeholder="500">
+                <input type="number" id="inpDesgasteCosto" placeholder="500" title="Desgaste de impresora por hoja">
             </div>
             <div class="col-50">
                 <label>Cant. Hojas:</label>
-                <input type="number" id="inpDesgasteCant" placeholder="10">
+                <input type="number" id="inpDesgasteCant" placeholder="10" title="Total de hojas impresas">
             </div>
         </div>
 
@@ -291,19 +335,19 @@
         <div class="row">
             <div class="col-50">
                 <label>⏱️ Minutos:</label>
-                <input type="number" id="inpMinutos" placeholder="30">
+                <input type="number" id="inpMinutos" placeholder="30" title="Tiempo de armado/corte">
             </div>
             <div class="col-50">
                 <label>🎨 Diseño ($):</label>
-                <input type="number" id="inpDiseno" placeholder="1500">
+                <input type="number" id="inpDiseno" placeholder="1500" title="Costo fijo por diseño">
             </div>
         </div>
 
         <h3>5. Rentabilidad</h3>
         <label>📈 Porcentaje Ganancia (%):</label>
-        <input type="number" id="inpGanancia" value="35">
+        <input type="number" id="inpGanancia" value="35" title="Tu margen de ganancia deseado">
 
-        <button class="btn-main" onclick="calcular()">CALCULAR PRECIO FINAL</button>
+        <button class="btn-main" onclick="calcular()" title="Generar el total final">CALCULAR PRECIO FINAL</button>
 
         <div id="boxResultado" class="result-area" style="display:none;">
             <strong style="font-size:11px; color:var(--rosa-brand); display:block; margin-bottom:5px;">Detalle Interno:</strong>
@@ -324,14 +368,14 @@
                 <span id="txtTotal" style="font-size:35px;">$0</span>
             </div>
             
-            <button class="btn-small btn-product" style="width:100%; margin-top:10px; margin-bottom:15px;" onclick="guardarComoProducto()">📦 Guardar Todo como Producto Nuevo</button>
+            <button class="btn-small btn-product" style="width:100%; margin-top:10px; margin-bottom:15px;" onclick="guardarComoProducto()" title="Guardar este cálculo como un producto fijo en el catálogo">📦 Guardar Todo como Producto Nuevo</button>
 
             <div class="action-row">
-                <button class="btn-final btn-whatsapp" onclick="copiarWhatsapp()">📱 WhatsApp</button>
-                <button class="btn-final btn-insta" onclick="mostrarModalInstagram('presupuesto')">📸 Instagram</button>
-                <button class="btn-final btn-save" onclick="guardarHistorial()">💾 Guardar</button>
-                <button class="btn-final btn-client" onclick="descargarCliente()">📄 Cliente</button>
-                <button class="btn-final btn-internal" onclick="descargarInterno()">📋 Para Mí</button>
+                <button class="btn-final btn-whatsapp" onclick="copiarWhatsapp()" title="Copiar resumen para enviar">📱 WhatsApp</button>
+                <button class="btn-final btn-insta" onclick="mostrarModalInstagram('presupuesto')" title="Crear texto de venta IA">📸 Instagram</button>
+                <button class="btn-final btn-save" onclick="guardarHistorial()" title="Guardar en historial (Pendiente)">💾 Guardar</button>
+                <button class="btn-final btn-client" onclick="descargarCliente()" title="Descargar imagen para el cliente">📄 Cliente</button>
+                <button class="btn-final btn-internal" onclick="descargarInterno()" title="Descargar ficha de costos">📋 Para Mí</button>
             </div>
         </div>
     </div>
@@ -403,7 +447,7 @@
             </div>
             <div class="row">
                 <input type="number" id="kitPrecio" placeholder="$ Precio Unit." style="flex:2;">
-                <button class="btn-small btn-add" style="flex:1; height:45px; margin-top:5px;" onclick="agregarItemKit()">+</button>
+                <button class="btn-small btn-add" style="flex:1; height:45px; margin-top:5px;" onclick="agregarItemKit()" title="Agregar item al Kit">+</button>
             </div>
 
             <div id="listaKitVisual">
@@ -444,10 +488,10 @@
                     </div>
                 </div>
                 <div style="margin-top:15px; display:flex; gap:5px; justify-content:center; flex-wrap:wrap;">
-                    <button class="btn-purple" style="margin-top:0; width:auto; font-size:12px;" onclick="descargarFlyerReal()">📸 Descargar</button>
-                    <button class="btn-final btn-insta" style="margin-top:0; width:auto; font-size:12px;" onclick="mostrarModalInstagram('kit')">📝 Instagram</button> 
+                    <button class="btn-purple" style="margin-top:0; width:auto; font-size:12px;" onclick="descargarFlyerReal()" title="Descargar imagen promocional">📸 Descargar</button>
+                    <button class="btn-final btn-insta" style="margin-top:0; width:auto; font-size:12px;" onclick="mostrarModalInstagram('kit')" title="Crear texto de venta">📝 Instagram</button> 
                     <button class="btn-save" style="margin-top:0; border-radius:12px; font-weight:600; width:auto; padding:0 10px; font-size:12px;" onclick="guardarComboHistorial()">💾 Guardar Modelo</button>
-                    <button class="btn-blue" style="margin-top:0; border-radius:12px; font-weight:600; width:auto; padding:0 10px; font-size:12px;" onclick="guardarKitEnCatalogo()">📚 Catálogo</button>
+                    <button class="btn-blue" style="margin-top:0; border-radius:12px; font-weight:600; width:auto; padding:0 10px; font-size:12px;" onclick="guardarKitEnCatalogo()" title="Guardar en Catálogo de Productos">📚 Catálogo</button>
                 </div>
             </div>
         </div>
@@ -458,7 +502,7 @@
 <div class="card bottom-panel">
     <div style="display:flex; justify-content:space-between; align-items:center;">
         <h3 style="margin:0; color: #8d6e63; border:none;">📂 Últimos Pedidos</h3>
-        <button class="btn-small" style="background:#f1f1f1; color:#999;" onclick="borrarTodoHistorial()">Borrar Todo</button>
+        <button class="btn-small" style="background:#f1f1f1; color:#999;" onclick="borrarTodoHistorial()" title="Borrar todo el historial">Borrar Todo</button>
     </div>
     <table id="tablaHistorial">
         <thead>
@@ -486,16 +530,12 @@
 <div id="modalInstagram" class="modal-overlay">
     <div class="modal-box">
         <span class="close-btn" onclick="document.getElementById('modalInstagram').style.display='none'">&times;</span>
-        <h3 style="color:var(--violeta-btn); margin-top:0;">📸 Generador de Textos</h3>
-        <p style="font-size:12px; color:#555;">Elige el estilo de tu post:</p>
-        <button class="btn-purple" onclick="generarCopy('vendedor')">🔥 Venta Directa (Corto y al pie)</button>
-        <button class="btn-pink" style="margin-top:10px;" onclick="generarCopy('emocional')">💖 Emocional (Storytelling)</button>
-        <button class="btn-aux" style="margin-top:10px;" onclick="generarCopy('minimal')">✨ Minimalista (Estético)</button>
-        <div style="margin-top:20px; border-top:1px dashed #ccc; padding-top:15px;">
-            <strong style="color:var(--menta-brand);">🤖 Generar con IA Real:</strong>
-            <p style="font-size:11px; color:#666;">Copia este prompt y pégalo en ChatGPT/Gemini junto con la foto de tu producto.</p>
-            <button class="btn-ai" style="width:100%; padding:12px; border-radius:10px; font-weight:bold; cursor:pointer;" onclick="generarCopy('ia')">✨ Copiar Prompt para IA</button>
-        </div>
+        <h3 style="color:var(--violeta-btn); margin-top:0;">🤖 Prompt para IA</h3>
+        <p style="font-size:12px; color:#666;">Copia este texto y pégalo en ChatGPT/Gemini junto con la foto de tu producto para generar el post perfecto.</p>
+        
+        <div style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:11px; color:#555; margin-top:10px; max-height:100px; overflow-y:auto;" id="previewPrompt"></div>
+
+        <button class="btn-ai" style="width:100%; padding:15px; border-radius:12px; font-weight:bold; cursor:pointer; font-size:16px; margin-top:15px;" onclick="generarCopy('ia')">✨ Copiar Prompt Maestro</button>
     </div>
 </div>
 
@@ -503,6 +543,7 @@
     <div class="modal-box">
         <span class="close-btn" onclick="document.getElementById('modalStats').style.display='none'">&times;</span>
         <h3 style="color:var(--menta-brand); margin-top:0;">📊 Finanzas y Estadísticas</h3>
+        
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Ventas Reales</span>
@@ -580,10 +621,15 @@
     <div class="modal-box">
         <span class="close-btn" onclick="document.getElementById('modalConfig').style.display='none'">&times;</span>
         <h3 style="color:var(--rosa-brand); margin-top:0;">⚙️ Configuración</h3>
-        <div class="section-header">Tu Logo</div>
+        
+        <div class="section-header">Tu Marca (Para Tickets)</div>
+        <input type="text" id="inpMarca" placeholder="Nombre de tu Marca" onchange="guardarMarca()">
+
+        <div class="section-header" style="margin-top:15px;">Tu Logo</div>
         <p style="font-size:12px; color:#666;">Sube tu logo para que aparezca en los tickets.</p>
         <input type="file" id="inpLogo" accept="image/*" onchange="cargarLogo()">
         <button class="btn-trash" style="margin-top:5px; width:100%; font-size:12px;" onclick="borrarLogo()">🗑️ Quitar Logo</button>
+        
         <div class="section-header" style="margin-top:20px;">Copia de Seguridad</div>
         <p style="font-size:12px; color:#666;">Guarda tus datos (productos y precios) para no perderlos si borras el caché.</p>
         <button class="btn-purple" id="btnBackup" onclick="descargarBackup()">⬇️ Descargar Copia</button>
@@ -653,7 +699,7 @@
 </div>
 
 <script>
-    // --- LÓGICA V77: CONTROL STOCK & CLEAN UI ---
+    // --- LÓGICA V83: RESTAURACION V79 + RESPONSIVE + IA FIX ---
     
     let materialesPresupuesto = []; 
     let dbMateriales = []; 
@@ -661,12 +707,12 @@
     let itemsKit = [];
     let datosGlobales = {}; 
     let origenInstagram = ''; 
+    let nombreMarca = "Calculadora Donatte"; // Default
 
     function iniciarApp() {
         let savedMats = localStorage.getItem("donatte_materiales_db");
         if(savedMats) { 
             dbMateriales = JSON.parse(savedMats); 
-            // Migrar vieja DB a nueva con stock
             dbMateriales.forEach(m => { if(m.stock === undefined) m.stock = 0; });
         } else {
             dbMateriales = [
@@ -678,8 +724,12 @@
         let savedProds = localStorage.getItem("donatte_productos_db");
         if(savedProds) { dbProductos = JSON.parse(savedProds); }
 
+        let savedMarca = localStorage.getItem("donatte_marca_nombre");
+        if(savedMarca) { nombreMarca = savedMarca; }
+        document.getElementById("inpMarca").value = savedMarca || "";
+        
         let savedLogo = localStorage.getItem("donatte_logo");
-        if(savedLogo) { renderizarLogo(savedLogo); }
+        actualizarMarcaUI(savedLogo);
 
         actualizarDropdown();
         actualizarDropdownProductos();
@@ -688,6 +738,63 @@
         if(config.hora) document.getElementById("inpHora").value = config.hora;
         if(config.desgaste) document.getElementById("inpDesgasteCosto").value = config.desgaste;
         cargarTabla();
+    }
+
+    // --- MARCA Y LOGO ---
+    function guardarMarca() {
+        let val = document.getElementById("inpMarca").value;
+        if(!val.trim()) val = "Calculadora Donatte"; 
+        nombreMarca = val;
+        localStorage.setItem("donatte_marca_nombre", val);
+        let savedLogo = localStorage.getItem("donatte_logo");
+        actualizarMarcaUI(savedLogo);
+        alert("Nombre de marca actualizado! 🏷️");
+    }
+
+    function cargarLogo() {
+        const input = document.getElementById('inpLogo');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let base64 = e.target.result;
+                localStorage.setItem("donatte_logo", base64);
+                actualizarMarcaUI(base64);
+                alert("Logo guardado correctamente ✨");
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function borrarLogo() {
+        if(confirm("¿Quitar logo?")) {
+            localStorage.removeItem("donatte_logo");
+            actualizarMarcaUI(null);
+            alert("Logo eliminado.");
+        }
+    }
+
+    function actualizarMarcaUI(logoBase64) {
+        let wrapper = document.getElementById("titleWrapper");
+        let oldLogo = wrapper.querySelector(".logo-img-header");
+        if(oldLogo) oldLogo.remove();
+
+        if(logoBase64) {
+            let img = document.createElement("img");
+            img.src = logoBase64;
+            img.className = "logo-img-header";
+            wrapper.insertBefore(img, wrapper.firstChild);
+        }
+
+        let logoHtml = logoBase64 ? `<img src="${logoBase64}" class="tc-logo-img">` : '';
+        let marcaHtml = `<p class="tc-logo">${nombreMarca}</p>`;
+        
+        document.getElementById("tc_header_content").innerHTML = logoHtml + marcaHtml;
+        document.getElementById("ti_header_content").innerHTML = logoHtml + marcaHtml;
+
+        let footer = document.querySelector(".fly-footer");
+        if(footer && footer.children.length > 2) {
+             footer.children[2].innerText = "@" + nombreMarca.replace(/\s+/g, '').toLowerCase();
+        }
     }
 
     // --- CONTROL STOCK ---
@@ -715,46 +822,79 @@
         alert("Stock actualizado ✅");
     }
 
-    // --- INSTAGRAM COPY GENERATOR ---
+    // --- INSTAGRAM PROMPT INTELIGENTE (DIFERENCIADO) ---
     function mostrarModalInstagram(origen) {
         origenInstagram = origen;
-        if (origen === 'kit' && itemsKit.length === 0) return alert("Arma un kit primero");
-        if (origen === 'presupuesto' && !datosGlobales.total) return alert("Calcula primero");
-        document.getElementById("modalInstagram").style.display = 'flex';
-    }
-
-    function generarCopy(estilo) {
+        let promptTexto = "";
         let nombre = "", total = "", itemsText = "";
-        
-        if (origenInstagram === 'kit') {
+
+        if (origen === 'kit') {
+            // --- PROMPT PARA PROMOCIÓN DE KIT ---
+            if (itemsKit.length === 0) return alert("Arma un kit primero");
             nombre = document.getElementById("flyerTituloInput").value || "SÚPER PROMO";
             total = document.getElementById("fly_total").innerText;
             itemsText = itemsKit.map(i => `- ${i.nombre}`).join("\n");
+            let fechaValidez = document.getElementById("fly_vencimiento").innerText;
+
+            promptTexto = `Actúa como un experto copywriter de marketing para redes sociales. Crea un texto publicitario atractivo y persuasivo para Instagram/Facebook promocionando el siguiente combo/kit.
+            
+            Título del Combo: ${nombre}
+            
+            Qué incluye:
+            ${itemsText}
+            
+            Precio Promocional: ${total}
+            Validez: ${fechaValidez}
+            
+            Objetivo: Generar deseo y urgencia de compra.
+            
+            Estructura del post:
+            1. Gancho inicial llamativo (pregunta o afirmación fuerte).
+            2. Descripción de los beneficios del kit.
+            3. Detalle de lo que incluye.
+            4. Precio y sentido de urgencia (oferta limitada).
+            5. Llamado a la acción claro (ej: "Escríbenos para reservar el tuyo").
+            6. Usa emojis relevantes y hashtags.`;
+
         } else {
-            nombre = datosGlobales.nombre || "Este hermoso pedido";
+            // --- PROMPT PARA RESPUESTA DE PRESUPUESTO ---
+            if (!datosGlobales.total) return alert("Calcula primero");
+            nombre = datosGlobales.nombre;
             total = formatMoney(datosGlobales.total);
             itemsText = datosGlobales.listaMateriales.map(i => `- ${i.nombre}`).join("\n");
-        }
 
-        let textoFinal = "";
-        if (estilo === 'ia') {
-            textoFinal = `Actúa como un experto en marketing de redes sociales para un emprendimiento de papelería creativa y kits de fiesta. Escribe un caption (texto) atractivo para Instagram para vender este producto:\n\nProducto: ${nombre}\nQué incluye:\n${itemsText}\nPrecio: ${total}\n\nUsa emojis, hashtags como #DonatteDonut #PapeleriaCreativa y un tono divertido pero profesional. Haz llamados a la acción para que comenten o manden mensaje.`;
-            alert("¡Prompt Copiado! 🧠\nAhora ve a ChatGPT o Gemini, pega este texto y sube la foto de tu producto.");
-        } else if (estilo === 'vendedor') {
-            textoFinal = `¡ATENCIÓN! 🚨 ${nombre} disponible YA.\n\nMirá todo lo que trae:\n${itemsText}\n\n🔥 PRECIO ESPECIAL: ${total}\n\nNo te cuelgues que vuelan. 🏃‍♀️\n¡Pedilo ahora por mensaje directo! 💌\n#DonatteDonut #Oferta`;
-        } else if (estilo === 'emocional') {
-            textoFinal = `Hacemos cada detalle con mucho amor 💖\n\n${nombre} listo para celebrar momentos únicos. ✨\n\nIncluye:\n${itemsText}\n\nValor: ${total}\n\nGracias por dejarnos ser parte de sus festejos. 🥰\nConsultanos para tu evento! 👇\n#PapeleriaConAmor #DonatteDonut`;
-        } else if (estilo === 'minimal') {
-            textoFinal = `${nombre} ✨\n\n${itemsText}\n\n▫️ ${total}\n\nInfo y pedidos al DM 📩\n#DonatteDonut`;
+            promptTexto = `Actúa como un asistente de ventas amable y profesional. Redacta una respuesta para WhatsApp/Instagram para un cliente que consultó el precio de un trabajo.
+            
+            Nombre del cliente/proyecto: "${nombre}"
+            
+            Detalle del presupuesto:
+            ${itemsText}
+            
+            Precio Total Final: ${total}
+            
+            Información importante a incluir:
+            - Saludo cordial y agradecimiento por la consulta.
+            - Resumen claro de lo que incluye el presupuesto.
+            - El precio total.
+            - MENCIONAR OBLIGATORIAMENTE: "Trabajamos con 50% de seña para congelar el precio y comenzar el trabajo."
+            - MENCIONAR: "Este presupuesto es válido por 48hs."
+            - Pregunta de cierre para avanzar (ej: "¿Te gustaría que avancemos? ¿Te paso los datos para la seña?").
+            - Usa un tono cercano y emojis amigables.`;
         }
+        
+        document.getElementById("previewPrompt").innerText = promptTexto;
+        document.getElementById("modalInstagram").style.display = 'flex';
+    }
 
-        navigator.clipboard.writeText(textoFinal).then(() => {
-            if (estilo !== 'ia') alert("Texto copiado! Pegalo en Instagram 📸");
+    function generarCopy() {
+        let texto = document.getElementById("previewPrompt").innerText;
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("¡Prompt Copiado! 🧠\nAhora pégalo en ChatGPT o Gemini junto con la foto de tu producto/kit.");
             document.getElementById("modalInstagram").style.display = 'none';
         });
     }
 
-    // --- DASHBOARD (SOLO VENTAS REALES Y PRESUPUESTOS) ---
+    // --- DASHBOARD ---
     function abrirStats() {
         let historial = JSON.parse(localStorage.getItem("donatte_historial_v71") || "[]");
         let totalVentas = 0, totalGanancia = 0, totalPendiente = 0, ventasCount = 0;
@@ -777,64 +917,21 @@
     }
 
     function mostrarInstrucciones() { document.getElementById("modalInstall").style.display = 'flex'; }
-
-    // --- LOGO & CONFIG ---
     function abrirConfig() { document.getElementById("modalConfig").style.display = 'flex'; }
     
-    function cargarLogo() {
-        const input = document.getElementById('inpLogo');
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                let base64 = e.target.result;
-                localStorage.setItem("donatte_logo", base64);
-                renderizarLogo(base64);
-                alert("Logo guardado correctamente ✨");
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function borrarLogo() {
-        if(confirm("¿Quitar logo?")) {
-            localStorage.removeItem("donatte_logo");
-            let container = document.getElementById("titleContainer");
-            let logo = container.querySelector(".logo-img-header");
-            if(logo) logo.remove();
-            document.getElementById("tc_header_content").innerHTML = '<p class="tc-logo">Donatte Donut</p>';
-            document.getElementById("ti_header_content").innerHTML = '';
-            alert("Logo eliminado.");
-        }
-    }
-
-    function renderizarLogo(base64) {
-        let container = document.getElementById("titleContainer");
-        let titleText = document.getElementById("appTitleText");
-        let oldLogo = container.querySelector(".logo-img-header");
-        if (oldLogo) oldLogo.remove();
-
-        let img = document.createElement("img");
-        img.src = base64;
-        img.className = "logo-img-header";
-        container.insertBefore(img, titleText); 
-
-        let imgHtml = `<img src="${base64}" class="tc-logo-img"><p class="tc-logo">DONATTEDONUT</p>`;
-        document.getElementById("tc_header_content").innerHTML = imgHtml;
-        document.getElementById("ti_header_content").innerHTML = imgHtml;
-    }
-
     // --- BACKUP ---
     function descargarBackup() {
         let data = {
             materiales: dbMateriales,
             productos: dbProductos,
             historial: JSON.parse(localStorage.getItem("donatte_historial_v71") || "[]"),
-            config: JSON.parse(localStorage.getItem("donatte_config") || "{}")
+            config: JSON.parse(localStorage.getItem("donatte_config") || "{}"),
+            marca: localStorage.getItem("donatte_marca_nombre") || "Calculadora Donatte"
         };
         let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", "donatte_backup.json");
+        downloadAnchorNode.setAttribute("download", "backup_calculadora.json");
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
@@ -851,6 +948,8 @@
                 if(data.productos) localStorage.setItem("donatte_productos_db", JSON.stringify(data.productos));
                 if(data.historial) localStorage.setItem("donatte_historial_v71", JSON.stringify(data.historial));
                 if(data.config) localStorage.setItem("donatte_config", JSON.stringify(data.config));
+                if(data.marca) localStorage.setItem("donatte_marca_nombre", data.marca);
+                
                 alert("Datos restaurados con éxito! 🔄");
                 location.reload();
             } catch(err) { alert("Error al leer el archivo. Asegúrate que sea el correcto."); }
@@ -1058,7 +1157,6 @@
         }
     }
     
-    // --- NUEVO: GUARDAR KIT EN CATALOGO ---
     function guardarKitEnCatalogo() {
         if(itemsKit.length === 0) return alert("Arma un combo primero");
         let nombre = prompt("Nombre para guardar este Kit en Catálogo:", "Kit Escolar");
@@ -1168,6 +1266,14 @@
     }
 
     function calcular() {
+        // VALIDACION NOMBRE OBLIGATORIO
+        let nombreCliente = document.getElementById("inpNombre").value;
+        if (!nombreCliente.trim()) {
+            alert("⚠️ Por favor, escribe el nombre del cliente o proyecto.");
+            document.getElementById("inpNombre").focus();
+            return;
+        }
+
         try {
             let totalMat = materialesPresupuesto.reduce((sum, item) => sum + item.precio, 0);
             let costoDesgaste = parseFloat(document.getElementById("inpDesgasteCosto").value) || 0;
@@ -1197,7 +1303,7 @@
             document.getElementById("boxResultado").style.display = "block";
             
             datosGlobales = {
-                nombre: document.getElementById("inpNombre").value || "Este hermoso pedido", // FIX: NOMBRE POR DEFECTO
+                nombre: nombreCliente,
                 fecha: new Date().toLocaleDateString(),
                 listaMateriales: [...materialesPresupuesto], 
                 totalMat: totalMat,
@@ -1588,6 +1694,12 @@
 
         // FECHA DE CREACIÓN DEL FLYER
         document.getElementById("fly_fecha_creacion").innerText = "Creado el: " + new Date().toLocaleDateString();
+        
+        // MARCA EN FLYER
+        let footer = document.querySelector(".fly-footer");
+        if(footer && footer.children.length > 2) {
+             footer.children[2].innerText = "@" + nombreMarca.replace(/\s+/g, '').toLowerCase();
+        }
     }
 
     function descargarFlyerReal() {
